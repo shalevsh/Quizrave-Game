@@ -172,7 +172,7 @@ const QuizApp = () => {
       setgenderImg(imgUrl);
     }
     setTimeout(() => {
-      if (QuestionNo < questions.length - 1) {
+      if (QuestionNo < questions.length) {
         SetQuestionNo(QuestionNo + 1);
         getImage(questions[QuestionNo]);
         speakQuestion(questions[QuestionNo]);
@@ -195,9 +195,9 @@ const QuizApp = () => {
      axios.get(x).then(pages=>{
      if(pages.data.items){
        pages.data.items.forEach(element => {
-       // console.log('okok',element);
+       
          if(element.pagemap){
-       //   console.log('okok',element);
+      
            if(element.pagemap.cse_image){
             console.log('okok',element.pagemap.cse_image);
             setImage(element.pagemap.cse_image[0].src);
@@ -211,7 +211,7 @@ const QuizApp = () => {
 
   const handleLifeLine = () => {
     if (rep >= 1 && timeExtension==false) {
-      if (QuestionNo < questions.length - 1) {
+      if (QuestionNo < questions.length) {
         SetQuestionNo(QuestionNo);
         new Audio(fifttyaud).play();
         getImage(QuestionNo);
@@ -224,7 +224,7 @@ const QuizApp = () => {
 
  const handleLifeLine50=()=>{
     if (rep >= 1 && fiftyExtension==false) {
-      if (QuestionNo < questions.length - 1) {
+      if (QuestionNo < questions.length) {
       let x=questions[QuestionNo-1]
       let ans=[]
       if(x.type==='multiple'){

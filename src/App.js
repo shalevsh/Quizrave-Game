@@ -1,50 +1,37 @@
-import React, { Component } from "react"
-import logo from "./logo.svg"
-import "./App.css"
+import React, { useState } from "react";
+import "./App.css";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory
+} from "react-router-dom";
+import ScrollToTop from "./jsx/Components/helperComponents/ScrollToTop";
+import QuizApp from "./jsx/Pages/quiz";
+import GameStart from "./jsx/Pages/gameStart";
+import ThemeSelect from "./jsx/Pages/themeSelect";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { Result } from "./jsx/Pages/quiz/Result";
 
-class LambdaDemo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { loading: false, msg: null }
-  }
-
-  handleClick = api => e => {
-    e.preventDefault()
-
-    this.setState({ loading: true })
-    fetch("/.netlify/functions/" + api)
-      .then(response => response.json())
-      .then(json => this.setState({ loading: false, msg: json.msg }))
-  }
-
-  render() {
-    const { loading, msg } = this.state
-
-    return (
-      <p>
-        <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
-        <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
-        <br />
-        <span>{msg}</span>
-      </p>
-    )
-  }
+export default function App() {
+  // All the routes are defined here for the whole application
+  // the default route of the application is GameStart
+  const location = useHistory();
+  return (
+    <div>
+      <Router>
+        <ScrollToTop />
+        <TransitionGroup>
+          <CSSTransition timeout={500} classNames="fade" key={location}>
+            <Switch>
+              <Route exact path={"/"} component={GameStart} />
+              <Route exact path={"/theme"} component={ThemeSelect} />
+              <Route exact path={"/quiz"} component={QuizApp} />
+              <Route exact path={"/result/:progress/:score"} component={Result} />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
+      </Router>
+    </div>
+  );
 }
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> first try.
-          </p>
-          <LambdaDemo />
-        </header>
-      </div>
-    )
-  }
-}
-
-export default App

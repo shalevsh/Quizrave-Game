@@ -181,11 +181,10 @@ const QuizApp = () => {
         let imgUrl = localStorage.getItem("genderImg2");
         setgenderImg(imgUrl);
       } else {
-        if(rep>0){
-          setScore(totalScore + (rep*20));
-        }
-        // dont push the last answer score
-        history.push(`/result/${progressCorrect.toString()}/${totalScore}`);
+        let final_score = ans === true ? totalScore + rem : totalScore
+        let progress_correct_num = progressCorrect != 0 ?  progressCorrect/10 : 0;
+        progress_correct_num = ans === true ? progress_correct_num + 1 : progress_correct_num ;
+        history.push(`/result/${progress_correct_num.toString()}/${final_score}`);
       }
     }, 500);
   };

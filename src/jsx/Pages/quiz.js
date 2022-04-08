@@ -68,11 +68,10 @@ const QuizApp = () => {
   const [image, setImage] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [QuestionNo, SetQuestionNo] = useState(0);
-  const [progressCompleted, setProgressCompleted] = useState(0);
-  const [progressCorrect, setProgressCorrect] = useState(0);
+  const [progress, setProgress] = useState(0);
   const [genderImg, setgenderImg] = useState("");
   const [totalScore, setScore] = useState(0);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = React.useState("");
   const { speak } = useSpeechSynthesis();
   const [lifelineAns,setLifeAns]=useState(null)
   const [timeExtension,settimeExtension]=useState(false)
@@ -162,19 +161,19 @@ const QuizApp = () => {
     if (ans === true) {
       new Audio(c).play();
       setScore(totalScore + rem);
-      setProgressCorrect(progressCorrect + 10);
+      setProgress(progress + 1);
       let imgUrl = localStorage.getItem("genderImg");
       setgenderImg(imgUrl);
     }
     if (ans === false) {
       new Audio(n).play();
+     // speak({text:'Wrong Answer'})
       let imgUrl = localStorage.getItem("genderImg3");
       setgenderImg(imgUrl);
     }
     setTimeout(() => {
       if (QuestionNo < questions.length) {
         SetQuestionNo(QuestionNo + 1);
-        setProgressCompleted(progressCompleted +10);
         getImage(questions[QuestionNo]);
         speakQuestion(questions[QuestionNo]);
         setKey((prevKey) => prevKey + 1);
@@ -184,8 +183,7 @@ const QuizApp = () => {
         if(rep>0){
           setScore(totalScore + (rep*20));
         }
-        // dont push the last answer score
-        history.push(`/result/${progressCorrect.toString()}/${totalScore}`);
+        history.push(`/result/${progress.toString()}/${totalScore}`);
       }
     }, 500);
   };
@@ -213,7 +211,7 @@ const QuizApp = () => {
 
   const handleLifeLine = () => {
     if (rep >= 1 && timeExtension==false) {
-      if (QuestionNo <= questions.length) {
+      if (QuestionNo < questions.length) {
         SetQuestionNo(QuestionNo);
         new Audio(fifttyaud).play();
         getImage(QuestionNo);
@@ -226,22 +224,12 @@ const QuizApp = () => {
 
  const handleLifeLine50=()=>{
     if (rep >= 1 && fiftyExtension==false) {
-      if (QuestionNo <= questions.length) {
+      if (QuestionNo < questions.length) {
       let x=questions[QuestionNo-1]
       let ans=[]
-      let rand = 0
-      let incorrect_answer = x.incorrect_answers[rand]
-      let correct_answer = x.correct_answer
       if(x.type==='multiple'){
         new Audio(fifttyaud).play();
-        let correct_index = x.incorrect_answers.indexOf(x.correct_answer)
-
-        while(incorrect_answer == correct_answer){
-        console.log(rand,"moskooooooo")
-        rand = getRandomInt(4)
-        incorrect_answer = x.incorrect_answers[rand];
-        }
-        ans.push(correct_answer,incorrect_answer);
+        ans.push(x.correct_answer,x.incorrect_answers[2])
         setLifeAns(ans)
         setfiftyExtension(true);
         setRep(rep - 1);
@@ -255,7 +243,19 @@ const QuizApp = () => {
       return question
     }
     else{
-      question ={...question,incorrect_answers:lifelineAns}
+      let x=[]
+      let z=question.incorrect_answers
+      let y=z.findIndex(elem=>elem===question.correct_answer)
+      if(y<=2){
+        x.push(question.incorrect_answers[1])
+        x.push(question.correct_answer)
+      }else{
+        x.push(question.incorrect_answers[3])
+        x.push(question.correct_answer)
+      }
+      console.log(x)
+      question ={...question,incorrect_answers:x}
+      console.log(question)
        return question
     }
   }
@@ -264,13 +264,11 @@ const QuizApp = () => {
      SetQuestionNo(0);
      setRemaining(60);
      setRep(2);
-     setProgressCorrect(0);
+     setProgress(0);
      setLifeAns(null);
      settimeExtension(false);
      setfiftyExtension(false);
   }
-  const getRandomInt = (max) => Math.floor(Math.random() * max);
-  
   return (
     <div className="flex flex-col items-center gap-y-20 p-20">
       <div className="flex items-start justify-between w-full">
@@ -327,16 +325,16 @@ const QuizApp = () => {
                 <BorderLinearProgress
                   variant="determinate"
                   valueBuffer={questions.length}
-                  value={progressCompleted}
+                  value={QuestionNo}
                 />
               </div>
 
               <div className="mt-2 shadow-md">
-                <p>Correct Questions {progressCorrect/10}</p>
+                <p>Correct Questions {progress}</p>
                 <BorderLinearProgress2
                   variant="determinate"
                   valueBuffer={questions.length}
-                  value={progressCorrect}
+                  value={progress}
                 />
               </div>
 

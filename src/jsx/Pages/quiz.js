@@ -227,25 +227,23 @@ const QuizApp = () => {
  const handleLifeLine50=()=>{
     if (rep >= 1 && fiftyExtension==false) {
       if (QuestionNo <= questions.length) {
-      let x=questions[QuestionNo-1]
-      let ans=[]
-      let rand = 0
-      let incorrect_answer = x.incorrect_answers[rand]
-      let correct_answer = x.correct_answer
-      if(x.type==='multiple'){
-        new Audio(fifttyaud).play();
-        let correct_index = x.incorrect_answers.indexOf(x.correct_answer)
-
-        while(incorrect_answer == correct_answer){
-        console.log(rand,"moskooooooo")
-        rand = getRandomInt(4)
-        incorrect_answer = x.incorrect_answers[rand];
+        let x=questions[QuestionNo-1]
+        let ans=[]
+        let rand = 0
+        let incorrect_answer = x.incorrect_answers[rand]
+        let correct_answer = x.correct_answer
+        if(x.type==='multiple'){
+          new Audio(fifttyaud).play();
+          while(incorrect_answer == correct_answer){
+            rand = getRandomInt(4)
+            incorrect_answer = x.incorrect_answers[rand];
+          }
+          
+          ans.push(correct_answer,incorrect_answer);
+          setLifeAns(ans)
+          setfiftyExtension(true);
+          setRep(rep - 1);
         }
-        ans.push(correct_answer,incorrect_answer);
-        setLifeAns(ans)
-        setfiftyExtension(true);
-        setRep(rep - 1);
-      }
       }
     }
   }

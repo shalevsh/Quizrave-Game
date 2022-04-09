@@ -10,7 +10,6 @@ import darkimg from './../../assets/dark.jpeg'
 
 const ThemeSelect = () => {
   let history = useHistory();
-  const difficulty=['easy','medium','hard']
   const [isLight, setIsLight] = useState(false)
   const selectDifficulty = difficulty => {
     if(difficulty==='default'){

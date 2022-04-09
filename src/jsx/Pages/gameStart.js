@@ -26,8 +26,8 @@ const GameStart = () => {
   quest=quest.map(elem=> {return { ...elem,incorrect_answers:sortAns(elem.incorrect_answers)}})
   //First Screen of project
   const [userName, setUserName] = React.useState("");
-  const [example,setExample]=React.useState(false)
-  const [answrong,setwrong]=React.useState(false)
+  const [example,setExample]= React.useState(false)
+  const [answrong,setwrong]= React.useState(false)
   let history = useHistory();
   const difficulty=['easy','medium','hard']
 
@@ -39,7 +39,9 @@ const GameStart = () => {
       localStorage.setItem("genderImg2", url2);
       localStorage.setItem("genderImg3", url3);
       localStorage.setItem("userName", userName);
-      localStorage.setItem("difficulty", difficulty[Math.floor(Math.random()*difficulty.length)]);
+       if(localStorage.getItem("difficulty") === null){
+         localStorage.setItem("difficulty", difficulty[Math.floor(Math.random()*difficulty.length)]);
+       } 
       history.push("/quiz");
     } else {
       alert("Please Enter Your Name!");

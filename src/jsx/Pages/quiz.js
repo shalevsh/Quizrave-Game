@@ -93,14 +93,22 @@ const QuizApp = () => {
   }, []);
 
   const checkAPi=()=>{
-    axios.get("https://opentdb.com/api.php?amount=100").then((res) => {
+      axios.get("https://opentdb.com/api.php?amount=100").then((res) => {
       let x = res.data.results;
-      console.log(res.data.results);
       let difficulty = localStorage.getItem("difficulty");
-      console.log(difficulty);
-      x.filter((data) => data.difficulty === difficulty);
-      let arr = x.splice(0, 10);
-      let quiz=[...arr]
+      let xArr = x.filter(data => data.difficulty === difficulty);
+
+      // if there is under 10 question at this difficulty i will return the number questions that exists at this difficulty
+      let quiz = xArr.length > 10 ? xArr.splice(0, 10) : xArr.splice(0, xArr.length -1);
+      while(quiz.length < 10){
+        difficulty = difficulty === "easy" ? "medium" : difficulty === "medium" ? "hard" : "medium"
+            let i = 49
+            if(x[i].difficulty === difficulty){
+              quiz.push(x[i])
+            }
+            i--;     
+      }
+
       quiz=quiz.map(elem=> {return { ...elem,incorrect_answers:[...elem.incorrect_answers,elem.correct_answer]}})
 
       quiz=quiz.map(elem=> {return { ...elem,incorrect_answers:sortAns(elem.incorrect_answers)}})

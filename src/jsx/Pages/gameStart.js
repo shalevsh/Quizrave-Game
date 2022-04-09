@@ -13,23 +13,21 @@ import Question from "./quiz/question";
 import monday from "./../../assets/monday.png"
 import c from './../../assets/c.mp3';
 import n from './../../assets/n.mp3';
-import fifttyaud from './../../assets/50.mp3';
-
 const GameStart = () => {
 
 
-  const sortAns=(ans)=>{
-    return ans.sort(function(a, b){return 0.5 - Math.random()})
+  const sortAns = (ans) => {
+    return ans.sort(function (a, b) { return 0.5 - Math.random() })
   }
-  var quest=[{question:'What is the previous name of Monday.com ?',type:'multiple','correct_answer':'daPulse',incorrect_answers:['Monday.com since day 1','Sunday','daPulse','vix'],category:'monday'}]
+  var quest = [{ question: 'What is the previous name of Monday.com ?', type: 'multiple', 'correct_answer': 'daPulse', incorrect_answers: ['Monday.com since day 1', 'Sunday', 'daPulse', 'vix'], category: 'monday' }]
 
-  quest=quest.map(elem=> {return { ...elem,incorrect_answers:sortAns(elem.incorrect_answers)}})
+  quest = quest.map(elem => { return { ...elem, incorrect_answers: sortAns(elem.incorrect_answers) } })
   //First Screen of project
   const [userName, setUserName] = React.useState("");
-  const [example,setExample]= React.useState(false)
-  const [answrong,setwrong]= React.useState(false)
+  const [example, setExample] = React.useState(false)
+  const [answrong, setwrong] = React.useState(false)
   let history = useHistory();
-  const difficulty=['easy','medium','hard']
+  const difficulty = ['easy', 'medium', 'hard']
 
   //method when user select Gender then it store it into the Localstorage
   const selectChar = (url, url2, url3, gender) => {
@@ -39,9 +37,9 @@ const GameStart = () => {
       localStorage.setItem("genderImg2", url2);
       localStorage.setItem("genderImg3", url3);
       localStorage.setItem("userName", userName);
-       if(localStorage.getItem("difficulty") === null){
-         localStorage.setItem("difficulty", difficulty[Math.floor(Math.random()*difficulty.length)]);
-       } 
+      if (localStorage.getItem("difficulty") === null) {
+        localStorage.setItem("difficulty", difficulty[Math.floor(Math.random() * difficulty.length)]);
+      }
       history.push("/quiz");
     } else {
       alert("Please Enter Your Name!");
@@ -52,17 +50,17 @@ const GameStart = () => {
     history.push("/theme");
   };
 
-  const checkAns=(val)=>{
-    if(val===true){
+  const checkAns = (val) => {
+    if (val === true) {
       new Audio(c).play();
       setExample(false)
-    }else{
+    } else {
       new Audio(n).play();
       setwrong(true)
     }
   }
 
-  const showExample=()=>{
+  const showExample = () => {
     setExample(!example);
     setwrong(false)
   }
@@ -70,13 +68,13 @@ const GameStart = () => {
   return (
     <div className="App">
       <div className="w-full flex justify-end p-4">
-      <button
-             onClick={()=>showExample()}
-              className=" mr-4 bg-green-800 text-white py-2 px-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
-              <span>Example</span>
-            
-            </button>
-      
+        <button
+          onClick={() => showExample()}
+          className=" mr-4 bg-green-800 text-white py-2 px-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
+          <span>Example</span>
+
+        </button>
+
         <FontAwesomeIcon
           onClick={doSettings}
           icon={faGear}
@@ -116,45 +114,43 @@ const GameStart = () => {
             />
           </div>
 
-          
+
 
         </div>
-        {example ?<div className="flex flex-col items-center p-2"> <div className="col-span-3 ">
-            <div
-              className="grid gap-2 grid-flow-row p-20 rounded-xl shadow-2xl bg-gray-300"
-              style={{ width: "800px" }}>
-              <Question data={quest[0]} />
-              <div className="flex justify-center">
-                <div
-                  className="bg-cover bg-center rounded-md"
-                  style={{
-                    width: "500px",
-                    height: "250px",
-                    backgroundImage: `url(${monday})`,
-                  }}>
-                  {" "}
-                </div>
-
+        {example ? <div className="flex flex-col items-center p-2"> <div className="col-span-3 ">
+          <div
+            className="grid gap-2 grid-flow-row p-20 rounded-xl shadow-2xl bg-gray-300"
+            style={{ width: "800px" }}>
+            <Question data={quest[0]} />
+            <div className="flex justify-center">
+              <div
+                className="bg-cover bg-center rounded-md"
+                style={{
+                  width: "500px",
+                  height: "250px",
+                  backgroundImage: `url(${monday})`,
+                }}>
+                {" "}
               </div>
-            
-                <AnswerMultiple
-                submit={(val) => checkAns(val)}
-                  data={quest[0]}
-                />
-               {answrong ?<div className="mt-6">
-                  <h6>Wrong answer</h6>
-               </div>:<></>}
-              
+
             </div>
-          </div></div>:<></>}
+
+            <AnswerMultiple
+              submit={(val) => checkAns(val)}
+              data={quest[0]}
+            />
+            {answrong ? <div className="mt-6">
+              <h6>Wrong answer</h6>
+            </div> : <></>}
+
+          </div>
+        </div></div> : <></>}
       </header>
 
-     
+
     </div>
   );
 };
 
 export default GameStart;
 
-// const maleImg = male;
-// const female = female2;

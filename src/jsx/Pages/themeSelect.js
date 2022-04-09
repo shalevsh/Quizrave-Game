@@ -12,9 +12,9 @@ const ThemeSelect = () => {
   let history = useHistory();
   const [isLight, setIsLight] = useState(false)
   const selectDifficulty = difficulty => {
-    if(difficulty==='default'){
-      localStorage.setItem("difficulty", difficulty[Math.floor(Math.random()*difficulty.length)]);
-    }else{
+    if (difficulty === 'default') {
+      localStorage.setItem("difficulty", difficulty[Math.floor(Math.random() * difficulty.length)]);
+    } else {
       localStorage.setItem("difficulty", difficulty);
     }
     history.push("/");
@@ -22,7 +22,7 @@ const ThemeSelect = () => {
 
   useEffect(() => {
     console.log(isLight)
-  },[isLight])
+  }, [isLight])
 
   const selectDark = (isDark) => {
     localStorage.setItem('isDark', isDark);
@@ -31,14 +31,14 @@ const ThemeSelect = () => {
   return (
     <div className="App ">
       <div className="w-full flex justify-end p-4">
-      <button
-             onClick={()=>history.push('/')}
-              className=" mr-4 bg-green-800 text-white py-2 px-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
-              <span>Back</span>
-            
-            </button>
-      
-       
+        <button
+          onClick={() => history.push('/')}
+          className=" mr-4 bg-green-800 text-white py-2 px-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
+          <span>Back</span>
+
+        </button>
+
+
       </div>
       <header className="App-header flex justify-center items-center"
         style={{ minHeight: "90vh" }}>
@@ -55,21 +55,21 @@ const ThemeSelect = () => {
                   onClick={() => changeTheme(themes.light)}
                   className="w-44 h-44 bg-white rounded-lg shadow-2xl  hover:left-10"
                 /> */}
-                 <FormControlLabel
-                  onClick={() => {changeTheme(themes.light); selectDark(false)}}
-                  checked={isLight? false : true}
+                <FormControlLabel
+                  onClick={() => { changeTheme(themes.light); selectDark(false) }}
+                  checked={isLight ? false : true}
                   value={!isLight}
                   control={<Radio />}
                   label="Light"
                 />
-                   <FormControlLabel
-                  onClick={() => {changeTheme(themes.dark); selectDark(true)}}
+                <FormControlLabel
+                  onClick={() => { changeTheme(themes.dark); selectDark(true) }}
                   checked={isLight ? true : false}
                   value={isLight}
                   control={<Radio />}
                   label="Dark"
                 />
-                
+
                 {/* <div
                   onClick={() => changeTheme(themes.dark)}
                   className="w-44 h-44 bg-black rounded-lg shadow-2xl"
@@ -83,7 +83,7 @@ const ThemeSelect = () => {
             <FormControl>
               <p>Difficulty</p>
               <RadioGroup
-              className="flex items-center gap-x-14"
+                className="flex items-center gap-x-14"
                 row
                 onChange={event => {
                   selectDifficulty(event.target.value);
@@ -91,7 +91,7 @@ const ThemeSelect = () => {
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
               >
-                 <FormControlLabel
+                <FormControlLabel
                   value="default"
                   control={<Radio />}
                   label="Random"
@@ -118,11 +118,11 @@ const ThemeSelect = () => {
             <FormControl>
               <p>Voice Mode</p>
               <RadioGroup
-              className="flex items-center gap-x-14"
+                className="flex items-center gap-x-14"
                 row
                 onChange={event => {
-                  let x=event.target.value
-                  localStorage.setItem('blindMode',x.toString())
+                  let x = event.target.value
+                  localStorage.setItem('blindMode', x.toString())
                 }}
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
@@ -137,7 +137,7 @@ const ThemeSelect = () => {
                   control={<Radio />}
                   label="Off"
                 />
-               
+
               </RadioGroup>
             </FormControl>
           </div>
@@ -148,7 +148,3 @@ const ThemeSelect = () => {
 };
 
 export default ThemeSelect;
-
-const light =
-  lightpng;
-const dark =darkimg;

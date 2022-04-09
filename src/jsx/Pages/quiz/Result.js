@@ -33,15 +33,15 @@ export const Result = () => {
 
   return (
     <div className="App ">
-      { score > 200 ? 
-      <Confetti numberOfPieces={score> 400 ? (progress)*100 : score > 300 ? (progress)*50 : (progress)*10} />
-      :null} 
+      {score > 200 ?
+        <Confetti numberOfPieces={score > 400 ? (progress) * 100 : score > 300 ? (progress) * 50 : (progress) * 10} />
+        : null}
       <header
         className="App-header flex justify-center items-center"
         style={{ minHeight: "90vh" }}
       >
         <div className="w-full h-full flex flex-col gap-y-6 justify-center items-center">
-          <h1>{score> 500 ? "Perfect game !" : score> 400 ? "Amazing" : score > 200 ? "Congrats" : "Go back to school"}</h1>
+          <h1>{score > 500 ? "Perfect game !" : score > 400 ? "Amazing" : score > 200 ? "Congrats" : "Go back to school"}</h1>
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-6 bg- flex items-center justify-between gap-4 rounded-lg px-6 py-3 shadow-xl w-96">
               <span className="">Total Questions: </span>{" "}

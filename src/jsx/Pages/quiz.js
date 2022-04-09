@@ -58,7 +58,7 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-var quest=[{question:'What is the previous name of Monday.com ?',type:'multiple','correct_answer':'Monday.com since day 1',incorrect_answers:['Sunday','daPulse','vix'],category:'monday'}]
+var quest = [{ question: 'What is the previous name of Monday.com ?', type: 'multiple', 'correct_answer': 'Monday.com since day 1', incorrect_answers: ['Sunday', 'daPulse', 'vix'], category: 'monday' }]
 
 const QuizApp = () => {
   let history = useHistory();
@@ -74,14 +74,14 @@ const QuizApp = () => {
   const [totalScore, setScore] = useState(0);
   const [userName, setUserName] = useState("");
   const { speak } = useSpeechSynthesis();
-  const [lifelineAns,setLifeAns]=useState(null)
-  const [timeExtension,settimeExtension]=useState(false)
-  const [fiftyExtension,setfiftyExtension]=useState(false)
+  const [lifelineAns, setLifeAns] = useState(null)
+  const [timeExtension, settimeExtension] = useState(false)
+  const [fiftyExtension, setfiftyExtension] = useState(false)
 
 
- 
-  const sortAns=(ans)=>{
-    return ans.sort(function(a, b){return 0.5 - Math.random()})
+
+  const sortAns = (ans) => {
+    return ans.sort(function (a, b) { return 0.5 - Math.random() })
   }
 
   //On this UseEffect we are calling the api of the question and it will run on the start of the application
@@ -92,8 +92,8 @@ const QuizApp = () => {
     checkAPi()
   }, []);
 
-  const checkAPi=()=>{
-      axios.get("https://opentdb.com/api.php?amount=100").then((res) => {
+  const checkAPi = () => {
+    axios.get("https://opentdb.com/api.php?amount=100").then((res) => {
       let x = res.data.results;
       let difficulty = localStorage.getItem("difficulty");
       let xArr = x.filter(data => data.difficulty === difficulty);
@@ -101,24 +101,23 @@ const QuizApp = () => {
       // if there is under 10 question at this difficulty i will return the number questions that exists at this difficulty
       let quiz = xArr.length > 10 ? xArr.splice(0, 10) : xArr.splice(0, xArr.length);
       let i = 49
-      while(quiz.length < 10){
+      while (quiz.length < 10) {
         difficulty = difficulty === "easy" ? "medium" : difficulty === "medium" ? "hard" : "medium"
-            if(x[i].difficulty === difficulty){
-              quiz.push(x[i])
-            }
-            i--;     
+        if (x[i].difficulty === difficulty) {
+          quiz.push(x[i])
+        }
+        i--;
       }
 
-      quiz=quiz.map(elem=> {return { ...elem,incorrect_answers:[...elem.incorrect_answers,elem.correct_answer]}})
+      quiz = quiz.map(elem => { return { ...elem, incorrect_answers: [...elem.incorrect_answers, elem.correct_answer] } })
 
-      quiz=quiz.map(elem=> {return { ...elem,incorrect_answers:sortAns(elem.incorrect_answers)}})
-      
-      
+      quiz = quiz.map(elem => { return { ...elem, incorrect_answers: sortAns(elem.incorrect_answers) } })
+
+
       console.log(quiz)
       setQuestions(quiz);
       SetQuestionNo(1);
       getImage(quiz[0]);
-      //speakQuestion(questions[0])
     });
     let imgUrl = localStorage.getItem("genderImg2");
     setgenderImg(imgUrl);
@@ -132,7 +131,7 @@ const QuizApp = () => {
     }
   }, [questions[0]]);
 
-  const stripUserHandles =(string)=> {
+  const stripUserHandles = (string) => {
     let e = document.createElement('textarea');
     e.innerHTML = string;
     // handle case of empty input
@@ -144,23 +143,19 @@ const QuizApp = () => {
     let blindMode = localStorage.getItem("blindMode");
     if (blindMode && blindMode === "on") {
       if (question) {
-        speak({ text:stripUserHandles( question.question )});
-        if(question.type==='multiple'){
-         // speak({text:stripUserHandles(question.correct_answer)})
-         for(let name of question.incorrect_answers){
-          speak({text:stripUserHandles(name)})
+        speak({ text: stripUserHandles(question.question) });
+        if (question.type === 'multiple') {
+          for (let name of question.incorrect_answers) {
+            speak({ text: stripUserHandles(name) })
 
-         }
-        }else{
-          speak({text:'True'})
-          speak({text:'false'})
+          }
+        } else {
+          speak({ text: 'True' })
+          speak({ text: 'false' })
         }
       }
     }
-    // speak({ text: question.question })
   };
-
-  
 
   // When user select the answer either it can right or wrong we are
   // checking answer here and update the progress and showing next question
@@ -182,7 +177,7 @@ const QuizApp = () => {
     setTimeout(() => {
       if (QuestionNo < questions.length) {
         SetQuestionNo(QuestionNo + 1);
-        setProgressCompleted(progressCompleted +10);
+        setProgressCompleted(progressCompleted + 10);
         getImage(questions[QuestionNo]);
         speakQuestion(questions[QuestionNo]);
         setKey((prevKey) => prevKey + 1);
@@ -190,8 +185,8 @@ const QuizApp = () => {
         setgenderImg(imgUrl);
       } else {
         let final_score = ans === true ? totalScore + rem : totalScore
-        let progress_correct_num = progressCorrect != 0 ?  progressCorrect/10 : 0;
-        progress_correct_num = ans === true ? progress_correct_num + 1 : progress_correct_num ;
+        let progress_correct_num = progressCorrect != 0 ? progressCorrect / 10 : 0;
+        progress_correct_num = ans === true ? progress_correct_num + 1 : progress_correct_num;
         history.push(`/result/${progress_correct_num.toString()}/${final_score}`);
       }
     }, 500);
@@ -199,27 +194,26 @@ const QuizApp = () => {
 
   // Here in this function we give question category and it return category image from image list
   const getImage = (quest) => {
-    console.log('okok',quest);
-    let x='https://www.googleapis.com/customsearch/v1?key=AIzaSyB0uv89joXH09zfw9k-6BMmwS0s2SwUsGw&cx=4f19805393bb95736&q='+quest.question
-     axios.get(x).then(pages=>{
-     if(pages.data.items){
-       pages.data.items.forEach(element => {
-       
-         if(element.pagemap){
-      
-           if(element.pagemap.cse_image){
-            console.log('okok',element.pagemap.cse_image);
-            setImage(element.pagemap.cse_image[0].src);
-           }
-         }
-       });
+    console.log('okok', quest);
+    let x = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyB0uv89joXH09zfw9k-6BMmwS0s2SwUsGw&cx=4f19805393bb95736&q=' + quest.question
+    axios.get(x).then(pages => {
+      if (pages.data.items) {
+        pages.data.items.forEach(element => {
+
+          if (element.pagemap) {
+
+            if (element.pagemap.cse_image) {
+              console.log('okok', element.pagemap.cse_image);
+              setImage(element.pagemap.cse_image[0].src);
+            }
+          }
+        });
       }
-     })
-    //setImage(img);
+    })
   };
 
   const handleLifeLine = () => {
-    if (rep >= 1 && timeExtension==false) {
+    if (rep >= 1 && timeExtension == false) {
       if (QuestionNo <= questions.length) {
         SetQuestionNo(QuestionNo);
         new Audio(fifttyaud).play();
@@ -231,22 +225,22 @@ const QuizApp = () => {
     }
   };
 
- const handleLifeLine50=()=>{
-    if (rep >= 1 && fiftyExtension==false) {
+  const handleLifeLine50 = () => {
+    if (rep >= 1 && fiftyExtension == false) {
       if (QuestionNo <= questions.length) {
-        let x=questions[QuestionNo-1]
-        let ans=[]
+        let x = questions[QuestionNo - 1]
+        let ans = []
         let rand = 0
         let incorrect_answer = x.incorrect_answers[rand]
         let correct_answer = x.correct_answer
-        if(x.type==='multiple'){
+        if (x.type === 'multiple') {
           new Audio(fifttyaud).play();
-          while(incorrect_answer == correct_answer){
+          while (incorrect_answer == correct_answer) {
             rand = getRandomInt(4)
             incorrect_answer = x.incorrect_answers[rand];
           }
-          
-          ans.push(correct_answer,incorrect_answer);
+
+          ans.push(correct_answer, incorrect_answer);
           setLifeAns(ans)
           setfiftyExtension(true);
           setRep(rep - 1);
@@ -255,34 +249,36 @@ const QuizApp = () => {
     }
   }
 
-  const getdata=(question)=>{
-    if(lifelineAns===null){
+  const getdata = (question) => {
+    if (lifelineAns === null) {
       return question
     }
-    else{
-      question ={...question,incorrect_answers:lifelineAns}
-       return question
+    else {
+      question = { ...question, incorrect_answers: lifelineAns }
+      return question
     }
   }
-  const RestartinitQuiz=()=>{
-     setScore(0);
-     SetQuestionNo(0);
-     setRemaining(60);
-     setRep(2);
-     setProgressCorrect(0);
-     setLifeAns(null);
-     settimeExtension(false);
-     setfiftyExtension(false);
+  const RestartinitQuiz = () => {
+    setScore(0);
+    SetQuestionNo(0);
+    setRemaining(60);
+    setRep(2);
+    setProgressCompleted(0);
+    setProgressCorrect(0);
+    setLifeAns(null);
+    settimeExtension(false);
+    setfiftyExtension(false);
+
   }
   const getRandomInt = (max) => Math.floor(Math.random() * max);
-  
+
   return (
     <div className="flex flex-col items-center gap-y-20 p-20">
       <div className="flex items-start justify-between w-full">
         <div className="w-44 flex flex-col items-center">
           <div
             className="w-44 h-44 bg-cover rounded-lg"
-            style={{ backgroundImage: `url(${genderImg && genderImg})`,  borderRadius: '100px' }}></div>
+            style={{ backgroundImage: `url(${genderImg && genderImg})`, borderRadius: '100px' }}></div>
           <span className="mb-4 text-lg text-center">
             {userName && userName}
           </span>
@@ -328,7 +324,7 @@ const QuizApp = () => {
           <div className="flex items-start gap-x-4">
             <div className="flex-flex-col">
               <div>
-                <p>Completed Questions {QuestionNo-1}</p>
+                <p>Completed Questions {QuestionNo - 1}</p>
                 <BorderLinearProgress
                   variant="determinate"
                   valueBuffer={questions.length}
@@ -337,7 +333,7 @@ const QuizApp = () => {
               </div>
 
               <div className="mt-2 shadow-md">
-                <p>Correct Questions {progressCorrect/10}</p>
+                <p>Correct Questions {progressCorrect / 10}</p>
                 <BorderLinearProgress2
                   variant="determinate"
                   valueBuffer={questions.length}
@@ -348,7 +344,7 @@ const QuizApp = () => {
               <div className="mt-2 shadow-md">
                 <p>Total Score {totalScore}</p>
               </div>
-              
+
             </div>
             <div>
               {QuestionNo > 0 ? (
@@ -374,46 +370,47 @@ const QuizApp = () => {
             </div>
           </div>
           <div className="mt-10 w-full">
-          <button
+            <button
               onClick={handleLifeLine}
               className="w-full bg-green-800 text-white py-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
               <span>Total life Lines</span>
               <span className="text-xl font-semibold"> {rep}</span>
             </button>
 
-           {timeExtension===true? <button
-             style={{backgroundColor:'lightgrey'}}
+            {timeExtension === true ? <button
+              style={{ backgroundColor: 'lightgrey' }}
               className="mt-2 w-full bg-grey-800 text-white py-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
               <span>Time Extension</span>
-             
-            </button>:<button
+
+            </button> : <button
               onClick={handleLifeLine}
               className="mt-2 w-full bg-green-800 text-white py-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
               <span>Time Extension</span>
-             
+
             </button>}
-            
-            {fiftyExtension===true ?  <button
-              style={{backgroundColor:'lightgrey'}}
+
+            {fiftyExtension === true ? <button
+              style={{ backgroundColor: 'lightgrey' }}
               className="w-full mt-2  text-white py-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
               <span>50/50 LifeLine</span>
-            
-            </button>:<button
+
+            </button> : <button
               onClick={handleLifeLine50}
               className="w-full mt-2 bg-green-800 text-white py-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
               <span>50/50 LifeLine</span>
-            
+
             </button>}
             <div className="mt-2 shadow-md">
-                  <div className="flex flex-row">
-                    
-                    <img onClick={()=>{checkAPi() 
-                     RestartinitQuiz()
-                      }} alt={'restart'} style={{width:'100px'}} src={restart} />
-                    
-                    <img onClick={()=>{history.push('/')}} alt={'exit'} style={{width:'100px'}} src={exit}/>
-                  </div>
-                </div>
+              <div className="flex flex-row">
+
+                <img onClick={() => {
+                  checkAPi()
+                  RestartinitQuiz()
+                }} alt={'restart'} style={{ width: '100px' }} src={restart} />
+
+                <img onClick={() => { history.push('/') }} alt={'exit'} style={{ width: '100px' }} src={exit} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -442,5 +439,5 @@ const images = [
   { name: "Science: Mathematics", url: math },
   { name: "Entertainment: Comics", url: videoGame },
   { name: "Geography", url: geo },
-  
+
 ];

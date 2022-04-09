@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-// import AssignmentIcon from '@mui/icons-material/DoneAllOutlined';
-// import CancelOutlined from '@mui/icons-material/CancelOutlined';
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { red, green } from "@mui/material/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const AnswerBoolean = props => {
   // Showing the boolean type answer here here
   const [value, setValue] = React.useState();
-  
+
   // When use select an Answer it checks either its wrong or correct
   // if its correct it return true to parent component where  the next question present
 

@@ -18,7 +18,11 @@ import {
   );
  
 function Chart() {
-	let name = localStorage.getItem("userName");
+	// let namesOfTopFive = JSON.parse(localStorage.getItem('userStats'));
+
+	// if(namesOfTopFive !== null){
+	// namesOfTopFive=namesOfTopFive.sort((a,b) => a-b).splice(0,5);
+	// }
 return (
 	<div className="App">
 	<h1>STATS OF GAME</h1>
@@ -30,7 +34,7 @@ return (
 			datasets: [
 			{
 				// Label for bars
-				label: "total count/value",
+				label: "TOP 5 SCORERS",
 				// Data or value of your each variable
 				data: JSON.parse(localStorage.getItem('scores')),
 				// Color of each bar

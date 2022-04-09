@@ -99,10 +99,10 @@ const QuizApp = () => {
       let xArr = x.filter(data => data.difficulty === difficulty);
 
       // if there is under 10 question at this difficulty i will return the number questions that exists at this difficulty
-      let quiz = xArr.length > 10 ? xArr.splice(0, 10) : xArr.splice(0, xArr.length -1);
+      let quiz = xArr.length > 10 ? xArr.splice(0, 10) : xArr.splice(0, xArr.length);
+      let i = 49
       while(quiz.length < 10){
         difficulty = difficulty === "easy" ? "medium" : difficulty === "medium" ? "hard" : "medium"
-            let i = 49
             if(x[i].difficulty === difficulty){
               quiz.push(x[i])
             }
@@ -409,7 +409,6 @@ const QuizApp = () => {
                     
                     <img onClick={()=>{checkAPi() 
                      RestartinitQuiz()
-                     // window.location.reload()
                       }} alt={'restart'} style={{width:'100px'}} src={restart} />
                     
                     <img onClick={()=>{history.push('/')}} alt={'exit'} style={{width:'100px'}} src={exit}/>
@@ -426,7 +425,6 @@ export default QuizApp;
 
 const images = [
   { name: "Entertainment: Video Games", url: videoGame },
- 
   { name: "Entertainment: Video Games", url: videoGame },
   { name: "Entertainment: Television", url: videoGame },
   { name: "Art", url: art },

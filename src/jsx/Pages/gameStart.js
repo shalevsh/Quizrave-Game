@@ -11,8 +11,11 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import AnswerMultiple from "./quiz/multipleAnswer";
 import Question from "./quiz/question";
 import monday from "./../../assets/monday.png"
-import c from './../../assets/c.mp3';
-import n from './../../assets/n.mp3';
+import correct from './../../assets/correct.mp3';
+import incorrect from './../../assets/incorrect.mp3';
+import start from './../../assets/start.wav';
+import settings from './../../assets/settings.wav';
+
 const GameStart = () => {
   const sortAns = (ans) => {
     return ans.sort(function (a, b) { return 0.5 - Math.random() })
@@ -20,7 +23,7 @@ const GameStart = () => {
   let quest = [{ question: 'What is the previous name of Monday.com ?', type: 'multiple', 'correct_answer': 'daPulse', incorrect_answers: ['Monday.com since day 1', 'Sunday', 'daPulse', 'vix'], category: 'monday' }]
 
   quest = quest.map(elem => { return { ...elem, incorrect_answers: sortAns(elem.incorrect_answers) } })
-  
+
   //First Screen of project
   const [userName, setUserName] = React.useState("");
   const [example, setExample] = React.useState(false)
@@ -31,6 +34,7 @@ const GameStart = () => {
   //method when user select Gender then it store it into the Localstorage
   const selectChar = (url, url2, url3, gender) => {
     if (userName) {
+      new Audio(start).play();
       localStorage.setItem("gender", gender);
       localStorage.setItem("genderImg", url);
       localStorage.setItem("genderImg2", url2);
@@ -46,15 +50,16 @@ const GameStart = () => {
   };
 
   const doSettings = () => {
+    new Audio(settings).play();
     history.push("/settings");
   };
 
   const checkAns = (val) => {
     if (val === true) {
-      new Audio(c).play();
+      new Audio(correct).play();
       setExample(false)
     } else {
-      new Audio(n).play();
+      new Audio(incorrect).play();
       setwrong(true)
     }
   }

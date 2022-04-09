@@ -11,8 +11,8 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useHistory } from "react-router-dom";
 import Chart from "./quiz/chart";
 import { useSpeechSynthesis } from "react-speech-kit";
-import c from './../../assets/c.mp3';
-import n from './../../assets/n.mp3';
+import correct from './../../assets/correct.mp3';
+import incorrect from './../../assets/incorrect.mp3';
 import fifttyaud from './../../assets/50.mp3';
 import restart from "./../../assets/restart.jpg"
 import exit from "./../../assets/exit.png"
@@ -147,14 +147,14 @@ const QuizApp = () => {
   const checkAns = (ans) => {
     setLifeAns(null)
     if (ans === true) {
-      new Audio(c).play();
+      new Audio(correct).play();
       setScore(totalScore + secondsRamaining);
       setProgressCorrect(progressCorrect + 10);
       let imgUrl = localStorage.getItem("genderImg");
       setgenderImg(imgUrl);
     }
     if (ans === false) {
-      new Audio(n).play();
+      new Audio(incorrect).play();
       let imgUrl = localStorage.getItem("genderImg3");
       setgenderImg(imgUrl);
     }

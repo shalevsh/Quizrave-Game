@@ -10,27 +10,13 @@ import LinearProgress, {
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useHistory } from "react-router-dom";
 import Chart from "./quiz/chart";
-import videoGame from "./../../assets/game.jpeg";
-import geo from "./../../assets/geo.jpeg";
-import math from "./../../assets/math.jpeg";
-import cartoon from "./../../assets/cartoon.jpeg";
-import anime from "./../../assets/anime.jpeg";
-import science from "./../../assets/anime.jpeg";
-import sports from "./../../assets/sports.jpeg";
-import animals from "./../../assets/animals.jpeg";
-import books from "./../../assets/books.jpeg";
-import movie from "./../../assets/movie.jpeg";
-import music from "./../../assets/music.jpeg";
-import art from "./../../assets/art.jpeg";
-import historyimg from "./../../assets/historyimg.jpeg";
-import gk from "./../../assets/gk.png";
-import monday from "./../../assets/monday.png"
 import { useSpeechSynthesis } from "react-speech-kit";
 import c from './../../assets/c.mp3';
 import n from './../../assets/n.mp3';
 import fifttyaud from './../../assets/50.mp3';
 import restart from "./../../assets/restart.jpg"
 import exit from "./../../assets/exit.png"
+
 //This is Just css via styled component
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -44,6 +30,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
   },
 }));
+
 //This is Just css via styled component
 const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -58,13 +45,11 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-var quest = [{ question: 'What is the previous name of Monday.com ?', type: 'multiple', 'correct_answer': 'Monday.com since day 1', incorrect_answers: ['Sunday', 'daPulse', 'vix'], category: 'monday' }]
-
 const QuizApp = () => {
   let history = useHistory();
   const [key, setKey] = useState(0);
   const [rem, setRemaining] = useState(60);
-  const [rep, setRep] = useState(2);
+  const [helper, setHelper] = useState(2);
   const [image, setImage] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [QuestionNo, SetQuestionNo] = useState(0);
@@ -89,35 +74,40 @@ const QuizApp = () => {
   //when response comes up im updating the state of the component
   // here the images for same category type of question is fetched form the image list
   useEffect(() => {
-    checkAPi()
+    fetchAPi()
   }, []);
 
-  const checkAPi = async () => {
+  const fetchAPi = async () => {
     let res = await fetch("https://opentdb.com/api.php?amount=100")
       let x = await res.json()
-      let difficulty = localStorage.getItem("difficulty");
-      let xArr = x.results.filter(data => data.difficulty === difficulty);
+      setData(x);
+  }
+  
+  // method that will set all the data for the quiz
+  const setData = (jsonData) => {
+    let difficulty = localStorage.getItem("difficulty");
+    let objectArr = jsonData.results.filter(data => data.difficulty === difficulty);
 
-      // if there is under 10 question at this difficulty i will return the number questions that exists at this difficulty
-      let quiz = xArr.length > 10 ? xArr.splice(0, 10) : xArr.splice(0, xArr.length);
-      let i = 49
-      while (quiz.length < 10) {
-        difficulty = difficulty === "easy" ? "medium" : difficulty === "medium" ? "hard" : "medium"
-        if (x[i].difficulty === difficulty) {
-          quiz.push(x[i])
-        }
-        i--;
+    // if there is under 10 question at this difficulty i will return the number questions that exists at this difficulty
+    let quiz = objectArr.length > 10 ? objectArr.splice(0, 10) : objectArr.splice(0, objectArr.length);
+    let i = 49
+    while (quiz.length < 10) {
+      difficulty = difficulty === "easy" ? "medium" : difficulty === "medium" ? "hard" : "medium"
+      if (jsonData[i].difficulty === difficulty) {
+        quiz.push(jsonData[i])
       }
-      quiz = quiz.map(elem => { return { ...elem, incorrect_answers: [...elem.incorrect_answers, elem.correct_answer] } })
-      quiz = quiz.map(elem => { return { ...elem, incorrect_answers: sortAns(elem.incorrect_answers) } })
-      console.log(quiz)
-      setQuestions(quiz);
-      SetQuestionNo(1);
-      getImage(quiz[0]);
-    let imgUrl = localStorage.getItem("genderImg2");
-    setgenderImg(imgUrl);
-    let name = localStorage.getItem("userName");
-    setUserName(name);
+      i--;
+    }
+    quiz = quiz.map(elem => { return { ...elem, incorrect_answers: [...elem.incorrect_answers, elem.correct_answer] } })
+    quiz = quiz.map(elem => { return { ...elem, incorrect_answers: sortAns(elem.incorrect_answers) } })
+    console.log(quiz)
+    setQuestions(quiz);
+    SetQuestionNo(1);
+    getImage(quiz[0]);
+  let imgUrl = localStorage.getItem("genderImg2");
+  setgenderImg(imgUrl);
+  let name = localStorage.getItem("userName");
+  setUserName(name);
   }
 
   useEffect(() => {
@@ -208,7 +198,7 @@ const QuizApp = () => {
   };
 
   const handleLifeLine = () => {
-    if (rep >= 1 && timeExtension == false) {
+    if (helper >= 1 && timeExtension == false) {
       if (QuestionNo <= questions.length) {
         SetQuestionNo(QuestionNo);
         new Audio(fifttyaud).play();
@@ -216,12 +206,12 @@ const QuizApp = () => {
         setKey((prevKey) => prevKey + 1);
         settimeExtension(true)
       }
-      setRep(rep - 1);
+      setHelper(helper - 1);
     }
   };
 
   const handleLifeLine50 = () => {
-    if (rep >= 1 && fiftyExtension == false) {
+    if (helper >= 1 && fiftyExtension == false) {
       if (QuestionNo <= questions.length) {
         let x = questions[QuestionNo - 1]
         let ans = []
@@ -238,7 +228,7 @@ const QuizApp = () => {
           ans.push(correct_answer, incorrect_answer);
           setLifeAns(ans)
           setfiftyExtension(true);
-          setRep(rep - 1);
+          setHelper(helper - 1);
         }
       }
     }
@@ -257,7 +247,7 @@ const QuizApp = () => {
     setScore(0);
     SetQuestionNo(0);
     setRemaining(60);
-    setRep(2);
+    setHelper(2);
     setProgressCompleted(0);
     setProgressCorrect(0);
     setLifeAns(null);
@@ -369,7 +359,7 @@ const QuizApp = () => {
               onClick={handleLifeLine}
               className="w-full bg-green-800 text-white py-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
               <span>Total life Lines</span>
-              <span className="text-xl font-semibold"> {rep}</span>
+              <span className="text-xl font-semibold"> {helper}</span>
             </button>
 
             {timeExtension === true ? <button
@@ -399,7 +389,7 @@ const QuizApp = () => {
               <div className="flex flex-row">
 
                 <img onClick={() => {
-                  checkAPi()
+                  fetchAPi()
                   RestartinitQuiz()
                 }} alt={'restart'} style={{ width: '100px' }} src={restart} />
 
@@ -415,24 +405,4 @@ const QuizApp = () => {
 
 export default QuizApp;
 
-const images = [
-  { name: "Entertainment: Video Games", url: videoGame },
-  { name: "Entertainment: Video Games", url: videoGame },
-  { name: "Entertainment: Television", url: videoGame },
-  { name: "Art", url: art },
-  { name: "Science & Nature", url: science },
-  { name: "Entertainment: Music", url: music },
-  { name: "General Knowledge", url: gk },
-  { name: "History", url: historyimg },
-  { name: "Entertainment: Film", url: movie },
-  { name: "Books", url: books },
-  { name: "Animals", url: animals },
-  { name: "Sports", url: sports },
-  { name: "Science: Gadgets", url: science },
-  { name: "Entertainment: Japanese Anime & Manga", url: anime },
-  { name: "Entertainment: Cartoon & Animations", url: cartoon },
-  { name: "Science: Mathematics", url: math },
-  { name: "Entertainment: Comics", url: videoGame },
-  { name: "Geography", url: geo },
 
-];

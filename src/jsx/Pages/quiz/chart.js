@@ -30,11 +30,13 @@ function combineTwoArraysIntoObjectArray(arr1, arr2) {
 	return topFive;
 };
 function Chart() {
+	// this chart will show only the top 5 scorers that saved on local storage.
 	let topFive;
 	let namesOfTopFive;
 	let scoresOfTopFive;
 	let namesOfUsers = JSON.parse(localStorage.getItem('userStats'));
 	let scoresOfUsers = JSON.parse(localStorage.getItem('scores'));
+	// if the number of usres are above 5, I need to filter the non relevant users.
 	if (namesOfUsers !== null && namesOfUsers.length > 5) {
 		scoresOfUsers = scoresOfUsers.map(data => parseInt(data));
 		topFive = combineTwoArraysIntoObjectArray(namesOfUsers, scoresOfUsers);
@@ -49,16 +51,11 @@ function Chart() {
 			<div style={{ maxWidth: "200px" }}>
 				<Bar
 					data={{
-						// Name of the variables on x-axies for each bar
-						// labels: JSON.parse(localStorage.getItem('userStats')),
 						labels: namesOfTopFive === undefined ? JSON.parse(localStorage.getItem('userStats')) : namesOfTopFive,
-
 						datasets: [
 							{
 								// Label for bars
 								label: "",
-								// Data or value of your each variable
-								// data: JSON.parse(localStorage.getItem('scores')),
 								data: scoresOfTopFive === undefined ? JSON.parse(localStorage.getItem('scores')) : scoresOfTopFive,
 
 								// Color of each bar

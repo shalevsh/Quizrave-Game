@@ -7,7 +7,6 @@ const Question = (props) => {
     return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
   }
   useEffect(() => {
-    // speak({ text: stripUserHandles(props.data.question) })
   }, [props]);
 
   return (

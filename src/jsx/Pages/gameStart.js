@@ -14,14 +14,13 @@ import monday from "./../../assets/monday.png"
 import c from './../../assets/c.mp3';
 import n from './../../assets/n.mp3';
 const GameStart = () => {
-
-
   const sortAns = (ans) => {
     return ans.sort(function (a, b) { return 0.5 - Math.random() })
   }
-  var quest = [{ question: 'What is the previous name of Monday.com ?', type: 'multiple', 'correct_answer': 'daPulse', incorrect_answers: ['Monday.com since day 1', 'Sunday', 'daPulse', 'vix'], category: 'monday' }]
+  let quest = [{ question: 'What is the previous name of Monday.com ?', type: 'multiple', 'correct_answer': 'daPulse', incorrect_answers: ['Monday.com since day 1', 'Sunday', 'daPulse', 'vix'], category: 'monday' }]
 
   quest = quest.map(elem => { return { ...elem, incorrect_answers: sortAns(elem.incorrect_answers) } })
+  
   //First Screen of project
   const [userName, setUserName] = React.useState("");
   const [example, setExample] = React.useState(false)

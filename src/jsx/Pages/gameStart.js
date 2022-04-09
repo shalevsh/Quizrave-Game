@@ -47,7 +47,7 @@ const GameStart = () => {
   };
 
   const doSettings = () => {
-    history.push("/theme");
+    history.push("/settings");
   };
 
   const checkAns = (val) => {

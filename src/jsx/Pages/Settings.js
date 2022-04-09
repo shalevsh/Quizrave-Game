@@ -3,18 +3,17 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import { ThemeContext, themes } from "./../../theme";
+import { ThemeContext, themes } from "../../theme";
 import { useHistory } from "react-router-dom";
-import lightpng from './../../assets/light.png'
-import darkimg from './../../assets/dark.jpeg'
 
-const ThemeSelect = () => {
+
+const Settings = () => {
   let history = useHistory();
   const [UIDifficulty, setUIDifficulty] = useState('')
   const [voiceMode, setVoiceMode] = useState(localStorage.getItem("voicemode") ? localStorage.getItem("voicemode") : "off")
   const [isLight, setIsLight] = useState(false)
   const selectDifficulty = difficulty => {
-    
+
     setUIDifficulty(difficulty);
     localStorage.setItem("uidifficulty", difficulty);
     if (difficulty === 'default') {
@@ -167,4 +166,4 @@ const ThemeSelect = () => {
   );
 };
 
-export default ThemeSelect;
+export default Settings;

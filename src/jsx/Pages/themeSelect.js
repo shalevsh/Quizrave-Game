@@ -10,8 +10,13 @@ import darkimg from './../../assets/dark.jpeg'
 
 const ThemeSelect = () => {
   let history = useHistory();
+  const [UIDifficulty, setUIDifficulty] = useState('')
+  const [voiceMode, setVoiceMode] = useState(localStorage.getItem("voicemode") ? localStorage.getItem("voicemode") : "off")
   const [isLight, setIsLight] = useState(false)
   const selectDifficulty = difficulty => {
+    
+    setUIDifficulty(difficulty);
+    localStorage.setItem("uidifficulty", difficulty);
     if (difficulty === 'default') {
       localStorage.setItem("difficulty", difficulty[Math.floor(Math.random() * difficulty.length)]);
     } else {
@@ -19,10 +24,23 @@ const ThemeSelect = () => {
     }
     history.push("/");
   };
-
+  const selectVoiceMode = mode => {
+    localStorage.setItem('blindMode', mode)
+    localStorage.setItem("voicemode", mode);
+    setVoiceMode(mode)
+  }
   useEffect(() => {
+    if (localStorage.getItem("uidifficulty")) {
+      setUIDifficulty(localStorage.getItem("uidifficulty"));
+    }
+    if (localStorage.getItem('isDark') && localStorage.getItem('isDark') == "true") {
+      setIsLight(true);
+    }
+    else {
+      setIsLight(false);
+    }
     console.log(isLight)
-  }, [isLight])
+  }, [])
 
   const selectDark = (isDark) => {
     localStorage.setItem('isDark', isDark);
@@ -88,6 +106,7 @@ const ThemeSelect = () => {
                 onChange={event => {
                   selectDifficulty(event.target.value);
                 }}
+                value={UIDifficulty}
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
               >
@@ -122,8 +141,9 @@ const ThemeSelect = () => {
                 row
                 onChange={event => {
                   let x = event.target.value
-                  localStorage.setItem('blindMode', x.toString())
+                  selectVoiceMode(x.toString())
                 }}
+                value={voiceMode}
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
               >
@@ -148,3 +168,5 @@ const ThemeSelect = () => {
 };
 
 export default ThemeSelect;
+const light = lightpng;
+const dark = darkimg;

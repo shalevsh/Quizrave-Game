@@ -18,25 +18,36 @@ import {
   );
  
 function Chart() {
-	// let namesOfTopFive = JSON.parse(localStorage.getItem('userStats'));
+	let topFive;
+	let namesOfTopFive;
+	let scoresOfTopFive;
+	 let namesOfUsers = JSON.parse(localStorage.getItem('userStats'));
+	 let scoresOfUsers = JSON.parse(localStorage.getItem('scores'));
+	//  if(namesOfUsers !== null && namesOfUsers.length > 5){
+	//  scoresOfUsers = scoresOfUsers.map(data => parseInt(data));	
+	//  topFive = namesOfUsers.forEach((namesOfUsers, i) => topFive[namesOfUsers] = scoresOfUsers[i]).sort((a,b) => a.scores - b.scores).splice(0,5);
+	//  namesOfTopFive = topFive.forEach(data => data.userStats);
+	//  scoresOfTopFive = topFive.forEach(data => data.scores);
+	//  }
 
-	// if(namesOfTopFive !== null){
-	// namesOfTopFive=namesOfTopFive.sort((a,b) => a-b).splice(0,5);
-	// }
 return (
 	<div className="App">
-	<h1>STATS OF GAME</h1>
+	<h1>STATS - TOP 5 SCORERS</h1>
 	<div style={{ maxWidth: "200px" }}>
 		<Bar
 		data={{
 			// Name of the variables on x-axies for each bar
-			labels: JSON.parse(localStorage.getItem('userStats')),
+			// labels: JSON.parse(localStorage.getItem('userStats')),
+			labels: namesOfTopFive === undefined ? JSON.parse(localStorage.getItem('userStats')) : namesOfTopFive ,
+			
 			datasets: [
 			{
 				// Label for bars
-				label: "TOP 5 SCORERS",
+				label: "",
 				// Data or value of your each variable
-				data: JSON.parse(localStorage.getItem('scores')),
+				// data: JSON.parse(localStorage.getItem('scores')),
+				data: scoresOfTopFive === undefined ? JSON.parse(localStorage.getItem('scores')) : scoresOfTopFive ,
+
 				// Color of each bar
 				backgroundColor: ["aqua", "green", "red", "yellow"],
 				// Border color of each bar

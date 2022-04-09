@@ -168,5 +168,3 @@ const ThemeSelect = () => {
 };
 
 export default ThemeSelect;
-const light = lightpng;
-const dark = darkimg;

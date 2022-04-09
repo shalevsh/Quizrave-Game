@@ -92,11 +92,11 @@ const QuizApp = () => {
     checkAPi()
   }, []);
 
-  const checkAPi = () => {
-    axios.get("https://opentdb.com/api.php?amount=100").then((res) => {
-      let x = res.data.results;
+  const checkAPi = async () => {
+    let res = await fetch("https://opentdb.com/api.php?amount=100")
+      let x = await res.json()
       let difficulty = localStorage.getItem("difficulty");
-      let xArr = x.filter(data => data.difficulty === difficulty);
+      let xArr = x.results.filter(data => data.difficulty === difficulty);
 
       // if there is under 10 question at this difficulty i will return the number questions that exists at this difficulty
       let quiz = xArr.length > 10 ? xArr.splice(0, 10) : xArr.splice(0, xArr.length);
@@ -108,17 +108,12 @@ const QuizApp = () => {
         }
         i--;
       }
-
       quiz = quiz.map(elem => { return { ...elem, incorrect_answers: [...elem.incorrect_answers, elem.correct_answer] } })
-
       quiz = quiz.map(elem => { return { ...elem, incorrect_answers: sortAns(elem.incorrect_answers) } })
-
-
       console.log(quiz)
       setQuestions(quiz);
       SetQuestionNo(1);
       getImage(quiz[0]);
-    });
     let imgUrl = localStorage.getItem("genderImg2");
     setgenderImg(imgUrl);
     let name = localStorage.getItem("userName");

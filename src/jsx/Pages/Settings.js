@@ -38,7 +38,6 @@ const Settings = () => {
     else {
       setIsLight(false);
     }
-    console.log(isLight)
   }, [])
 
   const selectDark = (isDark) => {

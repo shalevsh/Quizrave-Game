@@ -9,7 +9,6 @@ export default function ThemeContextWrapper(props) {
   }
 
   useEffect(() => {
-    console.log('im here')
 
     var cols = document.getElementsByClassName('App-header');
     switch (theme) {

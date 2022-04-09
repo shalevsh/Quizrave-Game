@@ -13,7 +13,6 @@ const AnswerBoolean = props => {
 
   useEffect(() => {
     setValue(props.data.correct_answer)
-    console.log(value)
   }, [])
   const handleChange = event => {
     if (event === value) {

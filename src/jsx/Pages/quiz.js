@@ -48,7 +48,7 @@ const BorderLinearProgress2 = styled(LinearProgress)(({ theme }) => ({
 const QuizApp = () => {
   let history = useHistory();
   const [key, setKey] = useState(0);
-  const [rem, setRemaining] = useState(60);
+  const [secondsRamaining, setSecondsRamaining] = useState(60);
   const [helper, setHelper] = useState(2);
   const [image, setImage] = useState(0);
   const [questions, setQuestions] = useState([]);
@@ -124,7 +124,6 @@ const QuizApp = () => {
   }
 
   const speakQuestion = (question) => {
-    console.log(question)
     let blindMode = localStorage.getItem("blindMode");
     if (blindMode && blindMode === "on") {
       if (question) {
@@ -149,7 +148,7 @@ const QuizApp = () => {
     setLifeAns(null)
     if (ans === true) {
       new Audio(c).play();
-      setScore(totalScore + rem);
+      setScore(totalScore + secondsRamaining);
       setProgressCorrect(progressCorrect + 10);
       let imgUrl = localStorage.getItem("genderImg");
       setgenderImg(imgUrl);
@@ -169,7 +168,7 @@ const QuizApp = () => {
         let imgUrl = localStorage.getItem("genderImg2");
         setgenderImg(imgUrl);
       } else {
-        let final_score = ans === true ? totalScore + rem : totalScore
+        let final_score = ans === true ? totalScore + secondsRamaining : totalScore
         let progress_correct_num = progressCorrect != 0 ? progressCorrect / 10 : 0;
         progress_correct_num = ans === true ? progress_correct_num + 1 : progress_correct_num;
         history.push(`/result/${progress_correct_num.toString()}/${final_score}`);
@@ -179,7 +178,6 @@ const QuizApp = () => {
 
   // Here in this function we give question category and it return category image from image list
   const getImage = (quest) => {
-    console.log('okok', quest);
     let x = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyB0uv89joXH09zfw9k-6BMmwS0s2SwUsGw&cx=4f19805393bb95736&q=' + quest.question
     axios.get(x).then(pages => {
       if (pages.data.items) {
@@ -188,7 +186,6 @@ const QuizApp = () => {
           if (element.pagemap) {
 
             if (element.pagemap.cse_image) {
-              console.log('okok', element.pagemap.cse_image);
               setImage(element.pagemap.cse_image[0].src);
             }
           }
@@ -246,7 +243,7 @@ const QuizApp = () => {
   const RestartinitQuiz = () => {
     setScore(0);
     SetQuestionNo(0);
-    setRemaining(60);
+    setSecondsRamaining(60);
     setHelper(2);
     setProgressCompleted(0);
     setProgressCorrect(0);
@@ -343,7 +340,7 @@ const QuizApp = () => {
                     checkAns(false);
                     return { shouldRepeat: true };
                   }}
-                  onUpdate={(val) => setRemaining(val)}
+                  onUpdate={(val) => setSecondsRamaining(val)}
                   duration={60}
                   colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
                   colorsTime={[7, 5, 2, 0]}>

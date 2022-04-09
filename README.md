@@ -13,6 +13,7 @@
 Quizrave is a web game for curious people.
 Try to answer 10 questions correctly and quickly and see what you are capable !
 10 questions, 1 min  each.
+
 Let's see if you get close to 600 points (;
 
 > **You can take a look at the backend repo [here](https://github.com/shalevsh/create-react-app-lambda/tree/master/src)**
@@ -23,24 +24,23 @@ Let's see if you get close to 600 points (;
 
 # Game Functionality 👋
 
-> **Main screen - choose your character.
+> * Main screen - choose your character.
 
-> **Settings - choose light\dark mode, difficullty level, voise mode.
+> * Settings - choose light\dark mode, difficullty level, voise mode.
 
-> **Stats - dynamic chart of top 5 scorers.
+> * Stats - dynamic chart of top 5 scorers.
 
-> **Animation, Propper celebration.
+> * Animation, Propper celebration.
 
-> **Progress bar of Completed Questions and Correct Questions.
+> * Progress bar of Completed Questions and Correct Questions.
 
-> ** Life Lines - 50/50 option, time extention.
+> * Life Lines - 50/50 option, time extention.
 
-> **Restart, quit game while quiz run.
+> * Restart, quit game while quiz run.
 
+> * Save settings after refresh.
 
-> **Save settings after refresh.
-
-> **New high score.
+> * New high score.
 
 <br />
 

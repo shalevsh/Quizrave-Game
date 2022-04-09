@@ -16,19 +16,33 @@ import {
 	Tooltip,
 	Legend
   );
- 
-function Chart() {
+  function combineTwoArraysIntoObjectArray (arr1, arr2)  {
+	let topFive  = []
+	
+
+	for(let i = 0 ; i<arr1.length;i++)
+	{
+		let obj = new Object({})
+		obj.userStats = arr1[i];
+		obj.scores = arr2[i];
+		topFive.push(obj)
+
+	}
+	return topFive;	
+ 	};
+ 	function Chart() {
 	let topFive;
 	let namesOfTopFive;
 	let scoresOfTopFive;
-	 let namesOfUsers = JSON.parse(localStorage.getItem('userStats'));
-	 let scoresOfUsers = JSON.parse(localStorage.getItem('scores'));
-	//  if(namesOfUsers !== null && namesOfUsers.length > 5){
-	//  scoresOfUsers = scoresOfUsers.map(data => parseInt(data));	
-	//  topFive = namesOfUsers.forEach((namesOfUsers, i) => topFive[namesOfUsers] = scoresOfUsers[i]).sort((a,b) => a.scores - b.scores).splice(0,5);
-	//  namesOfTopFive = topFive.forEach(data => data.userStats);
-	//  scoresOfTopFive = topFive.forEach(data => data.scores);
-	//  }
+	let namesOfUsers = JSON.parse(localStorage.getItem('userStats'));
+	let scoresOfUsers = JSON.parse(localStorage.getItem('scores'));
+	 if(namesOfUsers !== null && namesOfUsers.length > 5){
+	 scoresOfUsers = scoresOfUsers.map(data => parseInt(data));	
+	 topFive = combineTwoArraysIntoObjectArray(namesOfUsers,scoresOfUsers);
+	 topFive = topFive.sort((a,b) => b.scores - a.scores).splice(0,5);
+	 namesOfTopFive = topFive.map(data => data.userStats);
+	 scoresOfTopFive = topFive.map(data => data.scores);
+	 }
 
 return (
 	<div className="App">
@@ -49,9 +63,9 @@ return (
 				data: scoresOfTopFive === undefined ? JSON.parse(localStorage.getItem('scores')) : scoresOfTopFive ,
 
 				// Color of each bar
-				backgroundColor: ["aqua", "green", "red", "yellow"],
+				backgroundColor: ["aqua", "green", "red", "yellow" , "black"],
 				// Border color of each bar
-				borderColor: ["aqua", "green", "red", "yellow"],
+				borderColor: ["aqua", "green", "red", "yellow", "black"],
 				borderWidth: 0.5,
 			},
 			],

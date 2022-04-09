@@ -103,7 +103,7 @@ const QuizApp = () => {
     console.log(quiz)
     setQuestions(quiz);
     SetQuestionNo(1);
-    getImage(quiz[0]);
+   // getImage(quiz[0]);
   let imgUrl = localStorage.getItem("genderImg2");
   setgenderImg(imgUrl);
   let name = localStorage.getItem("userName");
@@ -162,7 +162,7 @@ const QuizApp = () => {
       if (QuestionNo < questions.length) {
         SetQuestionNo(QuestionNo + 1);
         setProgressCompleted(progressCompleted + 10);
-        getImage(questions[QuestionNo]);
+        //getImage(questions[QuestionNo]);
         speakQuestion(questions[QuestionNo]);
         setKey((prevKey) => prevKey + 1);
         let imgUrl = localStorage.getItem("genderImg2");
@@ -177,29 +177,29 @@ const QuizApp = () => {
   };
 
   // Here in this function we give question category and it return category image from image list
-  const getImage = (quest) => {
-    let x = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyB0uv89joXH09zfw9k-6BMmwS0s2SwUsGw&cx=4f19805393bb95736&q=' + quest.question
-    axios.get(x).then(pages => {
-      if (pages.data.items) {
-        pages.data.items.forEach(element => {
+  // const getImage = (quest) => {
+  //   let x = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyB0uv89joXH09zfw9k-6BMmwS0s2SwUsGw&cx=4f19805393bb95736&q=' + quest.question
+  //   axios.get(x).then(pages => {
+  //     if (pages.data.items) {
+  //       pages.data.items.forEach(element => {
 
-          if (element.pagemap) {
+  //         if (element.pagemap) {
 
-            if (element.pagemap.cse_image) {
-              setImage(element.pagemap.cse_image[0].src);
-            }
-          }
-        });
-      }
-    })
-  };
+  //           if (element.pagemap.cse_image) {
+  //             setImage(element.pagemap.cse_image[0].src);
+  //           }
+  //         }
+  //       });
+  //     }
+  //   })
+  // };
 
   const handleLifeLine = () => {
     if (helper >= 1 && timeExtension == false) {
       if (QuestionNo <= questions.length) {
         SetQuestionNo(QuestionNo);
         new Audio(fifttyaud).play();
-        getImage(QuestionNo);
+      //  getImage(QuestionNo);
         setKey((prevKey) => prevKey + 1);
         settimeExtension(true)
       }

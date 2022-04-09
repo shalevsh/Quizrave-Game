@@ -71,14 +71,7 @@ function Chart() {
 					options={{
 						maintainAspectRatio: false,
 						scales: {
-							yAxes: [
-								{
-									ticks: {
-										// The y-axis value will start from zero
-										beginAtZero: true,
-									},
-								},
-							],
+				
 						},
 						legend: {
 							labels: {

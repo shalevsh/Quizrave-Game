@@ -112,5 +112,8 @@ If the user has achieved a result of 200 points or more, and this is a new recor
 
 # Video 🎥
 
-https://www.youtube.com/watch?v=8KKr5scIk-g
+Please click on image to see the video.
+
+[![Demo](src/gitgubshots/1.png)](https://www.youtube.com/watch?v=8KKr5scIk-g)
+
 

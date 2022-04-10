@@ -31,7 +31,7 @@ export const Result = () => {
       localStorage.setItem("userStats", JSON.stringify(y));
     }
 
-    if (score > 400) {
+    if (score > 200) {
       setChecked(true)
       setTimeout(() => {
         setChecked(false)
@@ -49,7 +49,7 @@ export const Result = () => {
         style={{ minHeight: "90vh" }}
       >
         <div className="w-full h-full flex flex-col gap-y-6 justify-center items-center">
-        {score > 400 && <Zoom in={checked} style={{ transitionDelay: '500ms' }}>
+        {score > 200 && <Zoom in={checked} style={{ transitionDelay: '500ms' }}>
         <h1 className="rainbow-text">NEW HIGH SCORE !!!</h1>
           </Zoom>}
 

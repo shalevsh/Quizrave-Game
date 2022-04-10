@@ -77,7 +77,7 @@ When the number of points above 500 will be written Perfect game!
 When the number of points above 400 will be written Amazing!
 When the number of points above 200 will be written Congrats!
 Otherwise it will say Go back to school
-If the user has achieved a high result of 400 points or more, and this is a new record, this will also be indicated on the results screen.
+If the user has achieved a result of 200 points or more, and this is a new record, this will also be indicated on the results screen.
 
 # Technologies 👨‍💻
 
@@ -90,5 +90,25 @@ If the user has achieved a high result of 400 points or more, and this is a new 
 # Screenshots 🎮
 
 
-# Video 🎥
+![Welcome](src/gitgubshots/1.png)
 
+<br />
+
+![Setting](src/gitgubshots/2.png)
+
+<br />
+
+![Example Question](src/gitgubshots/3.png)
+
+<br />
+
+![Asking Question](src/gitgubshots/4.png)
+
+<br />
+
+![Game Ends](src/gitgubshots/5.png)
+<br />
+
+
+# Video 🎥
+![Video Demo](src/gitgubshots/video.mp4)

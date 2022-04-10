@@ -17,12 +17,16 @@ import start from './../../assets/start.wav';
 import settings from './../../assets/settings.wav';
 
 const GameStart = () => {
+
   const sortAns = (ans) => {
     return ans.sort(function (a, b) { return 0.5 - Math.random() })
   }
-  let quest = [{ question: 'What is the previous name of Monday.com ?', type: 'multiple', 'correct_answer': 'daPulse', incorrect_answers: ['Monday.com since day 1', 'Sunday', 'daPulse', 'vix'], category: 'monday' }]
 
-  quest = quest.map(elem => { return { ...elem, incorrect_answers: sortAns(elem.incorrect_answers) } })
+  let exampleQuestion = [{ question: 'What is the previous name of Monday.com ?', type: 'multiple', 'correct_answer': 'daPulse', incorrect_answers: ['Monday.com since day 1', 'Sunday', 'daPulse', 'vix'], category: 'monday' }]
+
+  exampleQuestion = exampleQuestion.map(elem => {
+     return { ...elem, incorrect_answers: sortAns(elem.incorrect_answers) } 
+    })
 
   //First Screen of project
   const [userName, setUserName] = React.useState("");
@@ -32,7 +36,7 @@ const GameStart = () => {
   const difficulty = ['easy', 'medium', 'hard']
 
   //method when user select Gender then it store it into the Localstorage
-  const selectChar = (url, url2, url3, gender) => {
+  const selectCharacter = (url, url2, url3, gender) => {
     if (userName) {
       new Audio(start).play();
       localStorage.setItem("gender", gender);
@@ -96,12 +100,12 @@ const GameStart = () => {
 
           <div className="flex flex-row gap-x-4 justify-center mt-8">
             <div
-              onClick={() => selectChar(male1, male2, male3, "male")}
+              onClick={() => selectCharacter(male1, male2, male3, "male")}
               className="w-44 h-44 bg-cover rounded-lg"
               style={{ backgroundImage: `url(${male2})`, borderRadius: '100px' }}
             />
             <div
-              onClick={() => selectChar(female1, female2, female3, "female")}
+              onClick={() => selectCharacter(female1, female2, female3, "female")}
               className="w-44 h-44 bg-cover rounded-lg"
               style={{ backgroundImage: `url(${female2})`, borderRadius: '100px' }}
             />
@@ -125,7 +129,7 @@ const GameStart = () => {
           <div
             className="grid gap-2 grid-flow-row p-20 rounded-xl shadow-2xl bg-gray-300"
             style={{ width: "800px" }}>
-            <Question data={quest[0]} />
+            <Question data={exampleQuestion[0]} />
             <div className="flex justify-center">
               <div
                 className="bg-cover bg-center rounded-md"
@@ -141,7 +145,7 @@ const GameStart = () => {
 
             <AnswerMultiple
               submit={(val) => checkAns(val)}
-              data={quest[0]}
+              data={exampleQuestion[0]}
             />
             {answrong ? <div className="mt-6">
               <h6>Wrong answer</h6>

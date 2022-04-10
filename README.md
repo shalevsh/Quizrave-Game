@@ -40,7 +40,7 @@ Let's see if you can get to 600 points (;
 
 > * Save settings after refresh.
 
-> * New high score.
+> * New high score feature (shows only if user earn good score).
 <br />
 
 # Technologies 👨‍💻

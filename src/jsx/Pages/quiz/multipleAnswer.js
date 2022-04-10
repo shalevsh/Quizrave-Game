@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -30,10 +30,10 @@ const AnswerMultiple = props => {
     if (props.data && props.data.incorrect_answers) {
       let x = [];
       let ans = props.data.incorrect_answers;
-      ans.forEach(data => {
+      ans.forEach((data, index) => {
         x.push(
-          <div className="px-6 py-2 border-1 border-white rounded-lg">
-            <FormControlLabel className="flex gap-x-6 text-black" value={data} control={<Radio />} label={stripUserHandles(data)} />
+          <div key={`d${index}`} className="px-6 py-2 border-1 border-white rounded-lg">
+            <FormControlLabel key={`i${index}`} className="flex gap-x-6 text-black" value={data} control={<Radio />} label={stripUserHandles(data)} />
           </div>
         );
       });
@@ -44,6 +44,7 @@ const AnswerMultiple = props => {
   return (
     <FormControl>
       <RadioGroup
+        key={"r1"}
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
         value={value}

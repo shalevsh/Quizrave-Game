@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Question from "./quiz/question";
 import AnswerBoolean from "./quiz/AnswerBoolean";
 import AnswerMultiple from "./quiz/multipleAnswer";
@@ -75,7 +74,7 @@ const QuizApp = () => {
   // here the images for same category type of question is fetched form the image list
   useEffect(() => {
     fetchAPi()
-  }, []);
+  }, [fetchAPi]);
 
   const fetchAPi = async () => {
     let res = await fetch("https://opentdb.com/api.php?amount=100")

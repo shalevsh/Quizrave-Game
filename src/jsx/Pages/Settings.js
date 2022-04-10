@@ -23,16 +23,18 @@ const Settings = () => {
     }
     history.push("/");
   };
+
   const selectVoiceMode = mode => {
     localStorage.setItem('blindMode', mode)
     localStorage.setItem("voicemode", mode);
     setVoiceMode(mode)
   }
+
   useEffect(() => {
     if (localStorage.getItem("uidifficulty")) {
       setUIDifficulty(localStorage.getItem("uidifficulty"));
     }
-    if (localStorage.getItem('isDark') && localStorage.getItem('isDark') == "true") {
+    if (localStorage.getItem('isDark') && localStorage.getItem('isDark') === "true") {
       setIsLight(true);
     }
     else {
@@ -67,10 +69,7 @@ const Settings = () => {
           <ThemeContext.Consumer>
             {({ changeTheme }) =>
               <div className="relative flex flex-row justify-center mt-8 gap-x-4">
-                {/* <div
-                  onClick={() => changeTheme(themes.light)}
-                  className="w-44 h-44 bg-white rounded-lg shadow-2xl  hover:left-10"
-                /> */}
+             
                 <FormControlLabel
                   onClick={() => { changeTheme(themes.light); selectDark(false) }}
                   checked={isLight ? false : true}
@@ -85,15 +84,11 @@ const Settings = () => {
                   control={<Radio />}
                   label="Dark"
                 />
-
-                {/* <div
-                  onClick={() => changeTheme(themes.dark)}
-                  className="w-44 h-44 bg-black rounded-lg shadow-2xl"
-                /> */}
               </div>}
           </ThemeContext.Consumer>
 
-          {/* In the below Code im Updating Difficulty level as you can 
+          {
+          /* In the below Code im Updating Difficulty level as you can 
                 see the radio button when change it update that */}
           <div className="mt-14">
             <FormControl>

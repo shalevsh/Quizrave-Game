@@ -7,10 +7,9 @@ body{
 }
 
 .appTheme{
-  background-color: white!important;
+  background-color: #dee4e7!important;
   color: #282c34!important;
 }
-
 .App-header {
   
   /* min-height: 100vh;

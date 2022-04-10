@@ -46,8 +46,9 @@ function Chart() {
 	}
 
 	return (
-		<div className="App">
+		<div className="App" style={{ position: "relative" }}>
 			<h1>STATS - TOP 5 SCORERS</h1>
+			<div style={{ position: "absolute", top: "27px", left: "54px", width: "66px", height: "21px", background: !localStorage.getItem('isDark') ? "#282c34" : localStorage.getItem('isDark') && localStorage.getItem('isDark') == "true" ? "#282c34" : "#dee4e7" }}></div>
 			<div style={{ maxWidth: "200px" }}>
 				<Bar
 					data={{

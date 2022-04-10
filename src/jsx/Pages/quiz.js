@@ -15,7 +15,7 @@ import incorrect from './../../assets/incorrect.mp3';
 import fifttyaud from './../../assets/50.mp3';
 import restart from "./../../assets/restart.jpg"
 import exit from "./../../assets/exit.png"
-
+import Fade from '@mui/material/Fade';
 //This is Just css via styled component
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -61,7 +61,7 @@ const QuizApp = () => {
   const [lifelineAns, setLifeAns] = useState(null)
   const [timeExtension, settimeExtension] = useState(false)
   const [fiftyExtension, setfiftyExtension] = useState(false)
-
+  const [anim, setAmin] = useState(false)
 
 
   const sortAns = (ans) => {
@@ -74,7 +74,7 @@ const QuizApp = () => {
   // here the images for same category type of question is fetched form the image list
   useEffect(() => {
     fetchAPi()
-  }, [fetchAPi]);
+  }, []);
 
   const fetchAPi = async () => {
     let res = await fetch("https://opentdb.com/api.php?amount=100")
@@ -103,6 +103,9 @@ const QuizApp = () => {
     setQuestions(quiz);
     SetQuestionNo(1);
     //getImage(quiz[0]);
+    setTimeout(() => {
+      setAmin(true)
+    }, 1000)
   let imgUrl = localStorage.getItem("genderImg2");
   setgenderImg(imgUrl);
   let name = localStorage.getItem("userName");
@@ -160,6 +163,7 @@ const QuizApp = () => {
     }
     setTimeout(() => {
       if (QuestionNo < questions.length) {
+        setAmin(false)
         SetQuestionNo(QuestionNo + 1);
         setProgressCompleted(progressCompleted + 10);
         //getImage(questions[QuestionNo]);
@@ -167,9 +171,12 @@ const QuizApp = () => {
         setKey((prevKey) => prevKey + 1);
         let imgUrl = localStorage.getItem("genderImg2");
         setgenderImg(imgUrl);
+        setTimeout(() => {
+          setAmin(true)
+        }, 1000)
       } else {
         let final_score = ans === true ? totalScore + secondsRamaining : totalScore
-        let progress_correct_num = progressCorrect != 0 ? progressCorrect / 10 : 0;
+        let progress_correct_num = progressCorrect !== 0 ? progressCorrect / 10 : 0;
         progress_correct_num = ans === true ? progress_correct_num + 1 : progress_correct_num;
         history.push(`/result/${progress_correct_num.toString()}/${final_score}`);
       }
@@ -209,20 +216,24 @@ const QuizApp = () => {
   //   };
 
   const handleLifeLine = () => {
-    if (helper >= 1 && timeExtension == false) {
+    if (helper >= 1 && timeExtension === false) {
       if (QuestionNo <= questions.length) {
+        setAmin(false)
         SetQuestionNo(QuestionNo);
         new Audio(fifttyaud).play();
        // getImage(QuestionNo);
         setKey((prevKey) => prevKey + 1);
         settimeExtension(true)
+        setTimeout(() => {
+          setAmin(true)
+        }, 500)
       }
       setHelper(helper - 1);
     }
   };
 
   const handleLifeLine50 = () => {
-    if (helper >= 1 && fiftyExtension == false) {
+    if (helper >= 1 && fiftyExtension === false) {
       if (QuestionNo <= questions.length) {
         let x = questions[QuestionNo - 1]
         let ans = []
@@ -231,7 +242,7 @@ const QuizApp = () => {
         let correct_answer = x.correct_answer
         if (x.type === 'multiple') {
           new Audio(fifttyaud).play();
-          while (incorrect_answer == correct_answer) {
+          while (incorrect_answer === correct_answer) {
             rand = getRandomInt(4)
             incorrect_answer = x.incorrect_answers[rand];
           }
@@ -255,6 +266,7 @@ const QuizApp = () => {
     }
   }
   const RestartinitQuiz = () => {
+    setAmin(false)
     setScore(0);
     SetQuestionNo(0);
     setSecondsRamaining(60);
@@ -283,6 +295,7 @@ const QuizApp = () => {
           </div>
         </div>
         {QuestionNo > 0 ? (
+          <Fade in={anim} timeout={1000}>
           <div className="col-span-4">
             <div
               className="grid gap-2 grid-flow-row p-20 rounded-xl shadow-2xl bg-gray-300"
@@ -313,6 +326,7 @@ const QuizApp = () => {
               )}
             </div>
           </div>
+          </Fade>
         ) : (
           <div className="col-span-4"></div>
         )}
@@ -398,13 +412,30 @@ const QuizApp = () => {
             </button>}
             <div className="mt-2 shadow-md">
               <div className="flex flex-row">
+              <button
+                  onClick={() => {
+                    fetchAPi()
+                    RestartinitQuiz()
+                  }}
+                  style={{ marginRight: "10px" }}
+                  className="w-full mt-2 bg-green-800 text-white py-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
+                  <span>Restart</span>
 
-                <img onClick={() => {
+                </button>
+                <button
+                  onClick={() => {
+                    history.push('/')
+                  }}
+                  className="w-full mt-2 bg-green-800 text-white py-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
+                  <span>Exit</span>
+
+                </button>
+                {/* <img onClick={() => {
                   fetchAPi()
                   RestartinitQuiz()
                 }} alt={'restart'} style={{ width: '100px' }} src={restart} />
 
-                <img onClick={() => { history.push('/') }} alt={'exit'} style={{ width: '100px' }} src={exit} />
+                <img onClick={() => { history.push('/') }} alt={'exit'} style={{ width: '100px' }} src={exit} /> */}
               </div>
             </div>
           </div>

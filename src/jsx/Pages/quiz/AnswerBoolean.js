@@ -13,7 +13,7 @@ const AnswerBoolean = props => {
 
   useEffect(() => {
     setValue(props.data.correct_answer)
-  }, [])
+  }, [props.data.correct_answer])
   const handleChange = event => {
     if (event === value) {
       props.submit(true);

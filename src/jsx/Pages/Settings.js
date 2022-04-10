@@ -13,11 +13,11 @@ const Settings = () => {
   const [voiceMode, setVoiceMode] = useState(localStorage.getItem("voicemode") ? localStorage.getItem("voicemode") : "off")
   const [isLight, setIsLight] = useState(false)
   const selectDifficulty = difficulty => {
-
+    let difficultyArra=["easy","medium","hard"]
     setUIDifficulty(difficulty);
     localStorage.setItem("uidifficulty", difficulty);
     if (difficulty === 'default') {
-      localStorage.setItem("difficulty", difficulty[Math.floor(Math.random() * difficulty.length)]);
+      localStorage.setItem("difficulty", difficultyArra[Math.floor(Math.random() * difficultyArra.length)]);
     } else {
       localStorage.setItem("difficulty", difficulty);
     }
@@ -34,12 +34,17 @@ const Settings = () => {
     if (localStorage.getItem("uidifficulty")) {
       setUIDifficulty(localStorage.getItem("uidifficulty"));
     }
+    if (!localStorage.getItem('isDark')) {
+      setIsLight(true);
+    }
+    else {
     if (localStorage.getItem('isDark') && localStorage.getItem('isDark') === "true") {
       setIsLight(true);
     }
     else {
       setIsLight(false);
     }
+  }
   }, [])
 
   const selectDark = (isDark) => {

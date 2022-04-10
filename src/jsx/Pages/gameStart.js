@@ -75,54 +75,62 @@ const GameStart = () => {
 
   return (
     <div className="App">
-      <div className="w-full flex justify-end p-4">
-        <button
-          onClick={() => showExample()}
-          className=" mr-4 bg-green-800 text-white py-2 px-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
-          <span>Example</span>
+      <div className="w-full p-4 text-center" style={{ marginTop: "50px" }}>
+        <span style={{ fontSize: "xxx-large", fontWeight: "bold" }}>Quizrave</span>
 
-        </button>
-
-        <FontAwesomeIcon
-          onClick={doSettings}
-          icon={faGear}
-          style={{ fontSize: "30px" }}
-        />
       </div>
       <header
         className="App-header flex justify-center items-center"
         style={{ minHeight: "90vh" }}
       >
-        <div className="flex flex-col justify-center text-center shadow-2xl px-40 py-20 rounded-2xl">
-          <div>
-            <h4>Select Your Character</h4>
+        <div className="flex flex-col  shadow-2xl px-40 py-20 rounded-2xl" style={{ position: "relative" }}>
+          <div style={{ position: "absolute", right: "20px", top: "20px" }}>
+            <div >
+              <FontAwesomeIcon
+                onClick={doSettings}
+                icon={faGear}
+                style={{ fontSize: "30px" }}
+              />
+            </div>
           </div>
+          <div className="justify-center text-center">
+            <div>
+              <h4>Select Your Character</h4>
+            </div>
 
-          <div className="flex flex-row gap-x-4 justify-center mt-8">
-            <div
-              onClick={() => selectCharacter(male1, male2, male3, "male")}
-              className="w-44 h-44 bg-cover rounded-lg"
-              style={{ backgroundImage: `url(${male2})`, borderRadius: '100px' }}
-            />
-            <div
-              onClick={() => selectCharacter(female1, female2, female3, "female")}
-              className="w-44 h-44 bg-cover rounded-lg"
-              style={{ backgroundImage: `url(${female2})`, borderRadius: '100px' }}
-            />
+            <div className="flex flex-row gap-x-4 justify-center mt-8">
+              <div
+                onClick={() => selectCharacter(male1, male2, male3, "male")}
+                className="w-44 h-44 bg-cover rounded-lg"
+                style={{ backgroundImage: `url(${male2})`, borderRadius: '100px' }}
+              />
+              <div
+                onClick={() => selectCharacter(female1, female2, female3, "female")}
+                className="w-44 h-44 bg-cover rounded-lg"
+                style={{ backgroundImage: `url(${female2})`, borderRadius: '100px' }}
+              />
+            </div>
+            <div className="flex flex-col items-start  gap-x-4 mt-4 w-full ">
+              <label className="text-lg">Enter Nick Name:</label>
+              <input
+                onChange={e => {
+                  setUserName(e.target.value);
+                }}
+                type={"text"}
+                placeholder="Your name"
+                className="outline-none text-black border-0 rounded-lg shadow-2xl px-5 py-2 w-full"
+              />
+
+              <button
+                onClick={() => showExample()}
+                className=" mr-4 bg-green-800 text-white py-2 px-2 text-center rounded-md shadow-2xl  items-center  w-full" style={{ 'margin-top': '44px' }}>
+                <span>Example</span>
+
+              </button>
+
+            </div>
+
           </div>
-          <div className="flex flex-col items-start  gap-x-4 mt-4 w-full ">
-            <label className="text-lg">Enter Nick Name:</label>
-            <input
-              onChange={e => {
-                setUserName(e.target.value);
-              }}
-              type={"text"}
-              placeholder="Your name"
-              className="outline-none text-black border-0 rounded-lg shadow-2xl px-5 py-2 w-full"
-            />
-          </div>
-
-
 
         </div>
         {example ? <div className="flex flex-col items-center p-2"> <div className="col-span-3 ">

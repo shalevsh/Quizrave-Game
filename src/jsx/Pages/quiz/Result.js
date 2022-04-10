@@ -4,11 +4,12 @@ import { useHistory } from "react-router-dom";
 import Confetti from "react-confetti";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-
+import Zoom from '@mui/material/Zoom';
 export const Result = () => {
   let history = useHistory();
   let name = localStorage.getItem("userName");
   const { progress, score } = useParams();
+  const [checked, setChecked] = React.useState(true);
   useEffect(() => {
     let x = JSON.parse(localStorage.getItem("scores"));
     if (x && x.length) {
@@ -29,6 +30,13 @@ export const Result = () => {
       y.push(name);
       localStorage.setItem("userStats", JSON.stringify(y));
     }
+
+    if (score > 400) {
+      setChecked(true)
+      setTimeout(() => {
+        setChecked(false)
+      }, 3000)
+    }
   }, []);
 
   return (
@@ -41,6 +49,14 @@ export const Result = () => {
         style={{ minHeight: "90vh" }}
       >
         <div className="w-full h-full flex flex-col gap-y-6 justify-center items-center">
+        {score > 400 && <Zoom in={checked} style={{ transitionDelay: '500ms' }}>
+        <h1 className="rainbow-text">NEW HIGH SCORE !!!</h1>
+          </Zoom>}
+
+          {/* <Zoom in={checked} style={{ transitionDelay: '500ms' }}>
+            <h1 className="rainbow-text">NEW HIGH SCORE !!!</h1>
+
+          </Zoom> */}
           <h1>{score > 500 ? "Perfect game !" : score > 400 ? "Amazing" : score > 200 ? "Congrats" : "Go back to school"}</h1>
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-6 bg- flex items-center justify-between gap-4 rounded-lg px-6 py-3 shadow-xl w-96">

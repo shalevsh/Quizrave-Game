@@ -5,8 +5,8 @@
 - [Game Functionality](#functionality-)
 - [Game Description](#description-)
 - [Technologies](#technologies-)
-- [ScreenShoots] (#screenshoots-)
-- [Videos] (#videos-)
+- [ScreenShots](#ScreenShots-)
+- [Videos](#videos-)
 
 <br />
 
@@ -111,4 +111,4 @@ If the user has achieved a result of 200 points or more, and this is a new recor
 
 
 # Video 🎥
-![Video Demo](src/gitgubshots/video.mp4)
+src/gitgubshots/video.mp4

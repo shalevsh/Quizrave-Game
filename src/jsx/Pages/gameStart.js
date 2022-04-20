@@ -16,18 +16,8 @@ import incorrect from './../../assets/incorrect.mp3';
 import start from './../../assets/start.wav';
 import settings from './../../assets/settings.wav';
 
+
 const GameStart = () => {
-
-  const sortAns = (ans) => {
-    return ans.sort(function (a, b) { return 0.5 - Math.random() })
-  }
-
-  let exampleQuestion = [{ question: 'What is the previous name of Monday.com ?', type: 'multiple', 'correct_answer': 'daPulse', incorrect_answers: ['Monday.com since day 1', 'Sunday', 'daPulse', 'vix'], category: 'monday' }]
-
-  exampleQuestion = exampleQuestion.map(elem => {
-     return { ...elem, incorrect_answers: sortAns(elem.incorrect_answers) } 
-    })
-
   //First Screen of project
   const [userName, setUserName] = React.useState("");
   const [example, setExample] = React.useState(false)
@@ -35,6 +25,23 @@ const GameStart = () => {
   let history = useHistory();
   const difficulty = ['easy', 'medium', 'hard']
 
+
+  const sortAns = (ans) => {
+    return ans.sort(function (a, b) { return 0.5 - Math.random() })
+  }
+
+  let exampleQuestion = [{ question: 'What is the previous name of Monday.com ?',
+                           type: 'multiple',
+                           correct_answer: 'daPulse',
+                           incorrect_answers: ['Monday.com since day 1', 'Sunday', 'daPulse', 'vix'],
+                           category: 'monday' }]
+
+  exampleQuestion = exampleQuestion.map(
+    elem => {
+     return { ...elem, incorrect_answers: elem.incorrect_answers } 
+    })
+
+  
   //method when user select Gender then it store it into the Localstorage
   const selectCharacter = (url, url2, url3, gender) => {
     if (userName) {
@@ -72,12 +79,11 @@ const GameStart = () => {
     setExample(!example);
     setwrong(false)
   }
-
+ //CSS - https://tailwindcss.com/docs/
   return (
     <div className="App">
       <div className="w-full p-4 text-center" style={{ marginTop: "50px" }}>
         <span style={{ fontSize: "xxx-large", fontWeight: "bold" }}>Quizrave</span>
-
       </div>
       <header
         className="App-header flex justify-center items-center"

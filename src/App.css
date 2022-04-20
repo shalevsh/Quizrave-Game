@@ -46,7 +46,7 @@ body{
     transform: rotate(360deg);
   }
 }
-
+/* 
 .fade-enter {
   opacity: 0;
   z-index: 1;
@@ -55,7 +55,7 @@ body{
 .fade-enter.fade-enter-active {
   opacity: 1;
   transition: opacity 250ms ease-in;
-}
+} */
 
 .bg-gray_100 {
   background-color: rgba(229, 231, 235,100)

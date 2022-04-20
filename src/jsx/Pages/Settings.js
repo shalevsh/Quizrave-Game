@@ -12,16 +12,18 @@ const Settings = () => {
   const [UIDifficulty, setUIDifficulty] = useState('')
   const [voiceMode, setVoiceMode] = useState(localStorage.getItem("voicemode") ? localStorage.getItem("voicemode") : "off")
   const [isLight, setIsLight] = useState(false)
+
+
   const selectDifficulty = difficulty => {
-    let difficultyArra=["easy","medium","hard"]
+    let difficultyArray=["easy","medium","hard"]
     setUIDifficulty(difficulty);
     localStorage.setItem("uidifficulty", difficulty);
     if (difficulty === 'default') {
-      localStorage.setItem("difficulty", difficultyArra[Math.floor(Math.random() * difficultyArra.length)]);
+      localStorage.setItem("difficulty", difficultyArray[Math.floor(Math.random() * difficultyArray.length)]);
     } else {
       localStorage.setItem("difficulty", difficulty);
     }
-    history.push("/");
+    //history.push("/");
   };
 
   const selectVoiceMode = mode => {
@@ -51,6 +53,7 @@ const Settings = () => {
     localStorage.setItem('isDark', isDark);
     setIsLight(isDark);
   }
+
   return (
     <div className="App ">
       <div className="w-full flex justify-end p-4">
@@ -58,10 +61,7 @@ const Settings = () => {
           onClick={() => history.push('/')}
           className=" mr-4 bg-green-800 text-white py-2 px-2 rounded-md shadow-2xl flex items-center gap-x-3 justify-center">
           <span>Back</span>
-
         </button>
-
-
       </div>
       <header className="App-header flex justify-center items-center"
         style={{ minHeight: "90vh" }}>
@@ -93,8 +93,7 @@ const Settings = () => {
           </ThemeContext.Consumer>
 
           {
-          /* In the below Code im Updating Difficulty level as you can 
-                see the radio button when change it update that */}
+          /* In the below Code im Updating Difficulty level. When changing radio button it will update that */}
           <div className="mt-14">
             <FormControl>
               <p>Difficulty</p>

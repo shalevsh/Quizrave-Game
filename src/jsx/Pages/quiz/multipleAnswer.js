@@ -5,6 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 
 const AnswerMultiple = props => {
+
   const [value, setValue] = React.useState();
 
   const handleChange = event => {
@@ -41,6 +42,9 @@ const AnswerMultiple = props => {
     }
   };
 
+  //MUI the FormControl is for controlling state and other data while the FormGroup is mostly for layout.
+  //The FormControl component will generally be wrapping one or many FormGroup components.
+  //In this case wrap RadioGroup
   return (
     <FormControl>
       <RadioGroup

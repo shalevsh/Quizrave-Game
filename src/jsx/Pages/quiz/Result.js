@@ -9,12 +9,15 @@ export const Result = () => {
   let history = useHistory();
   let name = localStorage.getItem("userName");
   const { progress, score } = useParams();
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(false);
+
   useEffect(() => {
     let x = JSON.parse(localStorage.getItem("scores"));
+    //There is already score at local storage
     if (x && x.length) {
       x.push(score);
       localStorage.setItem("scores", JSON.stringify(x));
+      //first time
     } else {
       x = [];
       x.push(score);
@@ -30,12 +33,18 @@ export const Result = () => {
       y.push(name);
       localStorage.setItem("userStats", JSON.stringify(y));
     }
-
-    if (score > 200) {
+    //add highst score
+    //convert array of string to array of numbers
+    let scoresNumbersArray = x.map(v => {
+      return parseInt(v, 10);
+    });
+    scoresNumbersArray = scoresNumbersArray.sort()
+    scoresNumbersArray=scoresNumbersArray.reverse()
+    let max = scoresNumbersArray[0] === null ? 0: scoresNumbersArray[0]
+    if (score > 200 && score >= max) {
       setChecked(true)
-      setTimeout(() => {
-        setChecked(false)
-      }, 3000)
+    }else{
+      setChecked(false)
     }
   }, []);
 
@@ -49,14 +58,9 @@ export const Result = () => {
         style={{ minHeight: "90vh" }}
       >
         <div className="w-full h-full flex flex-col gap-y-6 justify-center items-center">
-        {score > 200 && <Zoom in={checked} style={{ transitionDelay: '500ms' }}>
+        { <Zoom in={checked} style={{ transitionDelay: '500ms' }}>
         <h1 className="rainbow-text">NEW HIGH SCORE !!!</h1>
           </Zoom>}
-
-          {/* <Zoom in={checked} style={{ transitionDelay: '500ms' }}>
-            <h1 className="rainbow-text">NEW HIGH SCORE !!!</h1>
-
-          </Zoom> */}
           <h1>{score > 500 ? "Perfect game !" : score > 400 ? "Amazing" : score > 200 ? "Congrats" : "Go back to school"}</h1>
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-6 bg- flex items-center justify-between gap-4 rounded-lg px-6 py-3 shadow-xl w-96">

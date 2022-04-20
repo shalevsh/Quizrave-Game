@@ -22,14 +22,22 @@ export default function ThemeContextWrapper(props) {
         
         break
       default:
-        document.body.classList.add('appTheme');
+        document.body.classList.remove('appTheme');
         break;
     }
   }, [theme]);
+
+   //Some sample where the Context API proves helpful is : Theming — Pass down app theme
+   //https://flexiple.com/react/provider-pattern-with-react-context-api
+  //https://felixgerschau.com/react-typescript-context/
+  
+  // some reference that i used for implementation
+  //https://blog.logrocket.com/deep-dive-iterating-context-children-react/
 
   return (
     <ThemeContext.Provider value={{ theme: theme, changeTheme: changeTheme }}>
       {props.children}
     </ThemeContext.Provider>
+    //props.children means that React will render whatever you put between ThemeContextWrapper componnent at index.js
   );
 }
